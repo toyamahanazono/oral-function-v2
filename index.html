@@ -62,13 +62,15 @@
   .header {
     background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
     color: #fff;
-    padding: 12px 16px;
+    padding: 8px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
-    z-index: 50;
-    margin-top: 44px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 110;
     box-shadow: 0 2px 12px rgba(0,0,0,0.15);
   }
   .header h1 {
@@ -696,6 +698,8 @@
   .status-na { background:#E3F2FD; color:#1565C0; }
   .status-none { background:var(--grey-100); color:var(--grey-600); }
   .na-check { display:flex; align-items:center; gap:4px; font-size:0.65rem; color:var(--grey-600); }
+  .na-check-inline { display:flex; align-items:center; gap:2px; font-size:0.6rem; color:var(--grey-600); white-space:nowrap; min-width:55px; }
+  .na-check-inline input[type="checkbox"] { width:14px; height:14px; margin:0; }
   .na-check input[type="checkbox"] { width:16px; height:16px; }
   .diagnosis-result { text-align:center; padding:20px; border-radius:14px; margin:12px 0; }
   .diagnosis-result .count { font-size:2.5rem; font-weight:900; line-height:1; }
@@ -2017,26 +2021,19 @@
   <div class="result-card">
     <div class="result-card-header" style="background:var(--grey-100);">📋 各項目の結果</div>
     <div class="result-card-body">
-      <div class="result-item"><div class="result-item-num" style="background:#00897B;">①</div><div class="result-item-info"><div class="result-item-name">口腔衛生状態不良</div><div class="result-item-criteria" id="res-method1">TCI 50%以上</div></div><div class="result-item-input"><input type="text" id="res-test1" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status1">--</div></div>
-      <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test1" onchange="judgeResults()"><label for="na-test1">実施せず</label></div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#00897B;">①</div><div class="result-item-info"><div class="result-item-name">口腔衛生状態不良</div><div class="result-item-criteria" id="res-method1">TCI 50%以上</div></div><div class="na-check-inline"><input type="checkbox" id="na-test1" onchange="judgeResults()"><label for="na-test1">実施せず</label></div><div class="result-item-input"><input type="text" id="res-test1" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status1">--</div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#1565C0;">②</div><div class="result-item-info"><div class="result-item-name">口腔乾燥</div><div class="result-item-criteria" id="res-method2">口腔水分計 27.0未満</div></div><div class="result-item-input"><input type="text" id="res-test2" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status2">--</div></div>
-      <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test2" onchange="judgeResults()"><label for="na-test2">実施せず</label></div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#1565C0;">②</div><div class="result-item-info"><div class="result-item-name">口腔乾燥</div><div class="result-item-criteria" id="res-method2">口腔水分計 27.0未満</div></div><div class="na-check-inline"><input type="checkbox" id="na-test2" onchange="judgeResults()"><label for="na-test2">実施せず</label></div><div class="result-item-input"><input type="text" id="res-test2" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status2">--</div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#6A1B9A;">③</div><div class="result-item-info"><div class="result-item-name">咬合力低下</div><div class="result-item-criteria" id="res-method3">Oramo-bf 375N未満</div></div><div class="result-item-input"><input type="text" id="res-test3" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status3">--</div></div>
-      <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test3" onchange="judgeResults()"><label for="na-test3">実施せず</label></div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#6A1B9A;">③</div><div class="result-item-info"><div class="result-item-name">咬合力低下</div><div class="result-item-criteria" id="res-method3">Oramo-bf 375N未満</div></div><div class="na-check-inline"><input type="checkbox" id="na-test3" onchange="judgeResults()"><label for="na-test3">実施せず</label></div><div class="result-item-input"><input type="text" id="res-test3" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status3">--</div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#E65100;">④</div><div class="result-item-info"><div class="result-item-name">舌口唇運動機能低下</div><div class="result-item-criteria" id="res-method4">パタカ いずれか6回/秒未満</div></div><div class="result-item-input"><input type="text" id="res-test4" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status4">--</div></div>
-      <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test4" onchange="judgeResults()"><label for="na-test4">実施せず</label></div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#E65100;">④</div><div class="result-item-info"><div class="result-item-name">舌口唇運動機能低下</div><div class="result-item-criteria" id="res-method4">パタカ いずれか6回/秒未満</div><div class="result-item-pataka" id="res-pataka" style="font-size:0.6rem;color:var(--grey-600);margin-top:1px;"></div></div><div class="na-check-inline"><input type="checkbox" id="na-test4" onchange="judgeResults()"><label for="na-test4">実施せず</label></div><div class="result-item-input"><input type="text" id="res-test4" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status4">--</div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#C2185B;">⑤</div><div class="result-item-info"><div class="result-item-name">低舌圧</div><div class="result-item-criteria" id="res-method5">最大舌圧 30kPa未満</div></div><div class="result-item-input"><input type="text" id="res-test5" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status5">--</div></div>
-      <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test5" onchange="judgeResults()"><label for="na-test5">実施せず</label></div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#C2185B;">⑤</div><div class="result-item-info"><div class="result-item-name">低舌圧</div><div class="result-item-criteria" id="res-method5">最大舌圧 30kPa未満</div></div><div class="na-check-inline"><input type="checkbox" id="na-test5" onchange="judgeResults()"><label for="na-test5">実施せず</label></div><div class="result-item-input"><input type="text" id="res-test5" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status5">--</div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#2E7D32;">⑥</div><div class="result-item-info"><div class="result-item-name">咀嚼機能低下</div><div class="result-item-criteria" id="res-method6">グルコース 100mg/dL未満</div></div><div class="result-item-input"><input type="text" id="res-test6" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status6">--</div></div>
-      <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test6" onchange="judgeResults()" checked><label for="na-test6">実施せず</label></div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#2E7D32;">⑥</div><div class="result-item-info"><div class="result-item-name">咀嚼機能低下</div><div class="result-item-criteria" id="res-method6">グルコース 100mg/dL未満</div></div><div class="na-check-inline"><input type="checkbox" id="na-test6" onchange="judgeResults()" checked><label for="na-test6">実施せず</label></div><div class="result-item-input"><input type="text" id="res-test6" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status6">--</div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#D32F2F;">⑦</div><div class="result-item-info"><div class="result-item-name">嚥下機能低下</div><div class="result-item-criteria" id="res-method7">聖隷式 A≧1またはB≧4</div></div><div class="result-item-input"><input type="text" id="res-test7" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status7">--</div></div>
-      <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test7" onchange="judgeResults()"><label for="na-test7">実施せず</label></div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#D32F2F;">⑦</div><div class="result-item-info"><div class="result-item-name">嚥下機能低下</div><div class="result-item-criteria" id="res-method7">聖隷式 A≧1またはB≧4</div></div><div class="na-check-inline"><input type="checkbox" id="na-test7" onchange="judgeResults()"><label for="na-test7">実施せず</label></div><div class="result-item-input"><input type="text" id="res-test7" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status7">--</div></div>
     </div>
   </div>
 
@@ -2390,6 +2387,13 @@
     if(typeof dkResults!=='undefined'&&(dkResults.pa!==null||dkResults.ta!==null||dkResults.ka!==null)){
       var rates=[dkResults.pa,dkResults.ta,dkResults.ka].filter(function(r){return r!==null;}).map(function(r){return r.rate;});
       if(rates.length>0){document.getElementById('res-test4').value=Math.min.apply(null,rates).toFixed(1);}
+      var ptk=document.getElementById('res-pataka');
+      if(ptk){
+        var pa=dkResults.pa?dkResults.pa.rate.toFixed(1):'--';
+        var ta=dkResults.ta?dkResults.ta.rate.toFixed(1):'--';
+        var ka=dkResults.ka?dkResults.ka.rate.toFixed(1):'--';
+        ptk.textContent='パ:'+pa+' タ:'+ta+' カ:'+ka+' 回/秒';
+      }
     }
     // ⑤ 低舌圧
     el=document.getElementById('tongue-result');
@@ -2413,13 +2417,29 @@
       if(el&&!el.textContent.includes('---')){
         var sa=el.textContent.match(/A:\s*(\d+)/);var sb=el.textContent.match(/B:\s*(\d+)/);
         var av=sa?parseInt(sa[1]):0;var bv=sb?parseInt(sb[1]):0;
-        if(av>=1){document.getElementById('res-test7').value=av;document.getElementById('method-test7').value='seirei';}
-        else if(bv>=4){document.getElementById('res-test7').value=bv;document.getElementById('method-test7').value='seirei';}
+        document.getElementById('method-test7').value='seirei';
+        if(av>=1){document.getElementById('res-test7').value=av;}
+        else if(bv>=4){document.getElementById('res-test7').value=bv;}
+        else{document.getElementById('res-test7').value='0';}
       }
     }
     judgeResults();
   }
 
+
+  // === Layout: adjust tab-nav top based on header height ===
+  function adjustLayout(){
+    var hdr=document.querySelector('.header');
+    var tnav=document.getElementById('tabNav');
+    if(hdr&&tnav){
+      var hh=hdr.offsetHeight;
+      tnav.style.top=hh+'px';
+      var content=document.querySelector('.content');
+      if(content){content.style.paddingTop=(hh+tnav.offsetHeight+4)+'px';}
+    }
+  }
+  window.addEventListener('load',adjustLayout);
+  window.addEventListener('resize',adjustLayout);
 
   // === Update Tab Bar Values ===
   function updateTabValues(){
@@ -2454,6 +2474,12 @@
         var txt=ve.value.trim()+mu;
         if(mn&&(i===1||i===2||i===3||i===6||i===7))txt=mn+' '+txt;
         if(i===7&&seireiTab&&mel7&&mel7.value==='seirei')txt='聖隷式 '+seireiTab;
+        if(i===4&&typeof dkResults!=='undefined'){
+          var pp=dkResults.pa?dkResults.pa.rate.toFixed(1):'--';
+          var tp=dkResults.ta?dkResults.ta.rate.toFixed(1):'--';
+          var kp=dkResults.ka?dkResults.ka.rate.toFixed(1):'--';
+          txt='パ:'+pp+' タ:'+tp+' カ:'+kp;
+        }
         tv.textContent=txt;
         tv.className='tab-val '+(se&&se.textContent==='該当'?'tv-fail':'tv-pass');
       }else{
