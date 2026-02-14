@@ -68,6 +68,7 @@
     justify-content: space-between;
     position: relative;
     z-index: 50;
+    margin-top: 44px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.15);
   }
   .header h1 {
@@ -849,9 +850,7 @@
   z-index: 100 !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-.content {
-  padding-top: 52px !important;
-}
+
 /* === Offline indicator === */
 #offline-indicator {
   display: none;
@@ -2357,59 +2356,69 @@
 }
 
   // ===== Sync from tabs =====
-  function syncFromTabs(){var el,m;el=document.getElementById('tci-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)%/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='tci';}}el=document.getElementById('bact-result');if(el&&!el.textContent.includes('---')&&!el.textContent.includes('---')){m=el.textContent.match(/レベル(\d+)/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='bacteria';}}el=document.getElementById('moist-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/測定値:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='moisture';}}el=document.getElementById('saxon-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/増加重量:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='saxon';}}el=document.getElementById('bite-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)N/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value=document.getElementById('bite-device').value;}}el=document.getElementById('teeth-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/(\d+)/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value='teeth';}}if(typeof dkResults!=='undefined'&&(dkResults.pa!==null||dkResults.ta!==null||dkResults.ka!==null)){var rates=[dkResults.pa,dkResults.ta,dkResults.ka].filter(function(r){return r!==null;}).map(function(r){return r.rate;});if(rates.length>0){document.getElementById('res-test4').value=Math.min.apply(null,rates).toFixed(1);}}el=document.getElementById('tongue-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)kPa/);if(m){document.getElementById('res-test5').value=m[1];}}el=document.getElementById('gluco-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)mg\/dL/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='glucose';}}el=document.getElementById('chew-score-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/スコア\s*(\d+)/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='score';}}el=document.getElementById('eat10-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/合計:\s*(\d+)点/);if(m){document.getElementById('res-test7').value=m[1];document.getElementById('method-test7').value='eat10';}}el=document.getElementById('seirei-result');if(el&&!el.textContent.includes('---')){var ma=el.textContent.match(/A:\s*(\d+)/);var mb=el.textContent.match(/B:\s*(\d+)/);var av=ma?parseInt(ma[1]):0;var bv=mb?parseInt(mb[1]):0;if(av>=1){document.getElementById('res-test7').value=av;document.getElementById('method-test7').value='seirei';}else if(bv>=4){document.getElementById('res-test7').value=bv;document.getElementById('method-test7').value='seirei';}}
-  // Override with active tab's method if applicable
-  var ct=tabs[currentTab];
-  if(ct==='test1'){
-    // Check which method is active
-    var m1a=document.getElementById('m1a');
+  // Always use the active method panel to determine values
+  function syncFromTabs(){
+    var el,m;
+    // ① 口腔衛生: m1a(TCI) or m1b(細菌カウンタ) のアクティブな方
     var m1b=document.getElementById('m1b');
     if(m1b&&m1b.classList.contains('active')){
-      var bel=document.getElementById('bact-result');
-      if(bel&&!bel.textContent.includes('---')){var bm=bel.textContent.match(/(\d+)/);if(bm){document.getElementById('res-test1').value=bm[1];document.getElementById('method-test1').value='bacteria';}}
+      el=document.getElementById('bact-result');
+      if(el&&!el.textContent.includes('---')){m=el.textContent.match(/レベル(\d+)/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='bacteria';}}
     }else{
-      var tel=document.getElementById('tci-result');
-      if(tel&&!tel.textContent.includes('---')){var tm=tel.textContent.match(/([\d.]+)%/);if(tm){document.getElementById('res-test1').value=tm[1];document.getElementById('method-test1').value='tci';}}
+      el=document.getElementById('tci-result');
+      if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)%/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='tci';}}
     }
-  }else if(ct==='test2'){
-    var m2a=document.getElementById('m2a');
+    // ② 口腔乾燥: m2a(水分計) or m2b(サクソン) のアクティブな方
     var m2b=document.getElementById('m2b');
     if(m2b&&m2b.classList.contains('active')){
-      var sel=document.getElementById('saxon-result');
-      if(sel&&!sel.textContent.includes('---')){var sm=sel.textContent.match(/([\d.]+)/);if(sm){document.getElementById('res-test2').value=sm[1];document.getElementById('method-test2').value='saxon';}}
+      el=document.getElementById('saxon-result');
+      if(el&&!el.textContent.includes('---')){m=el.textContent.match(/増加重量:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='saxon';}}
     }else{
-      var mel2=document.getElementById('moist-result');
-      if(mel2&&!mel2.textContent.includes('---')){var mm=mel2.textContent.match(/([\d.]+)/);if(mm){document.getElementById('res-test2').value=mm[1];document.getElementById('method-test2').value='moisture';}}
+      el=document.getElementById('moist-result');
+      if(el&&!el.textContent.includes('---')){m=el.textContent.match(/測定値:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='moisture';}}
     }
-  }else if(ct==='test3'){
-    var m3a=document.getElementById('m3a');
-    if(m3a&&m3a.classList.contains('active')){
-      var bel3=document.getElementById('bite-result');
-      if(bel3&&!bel3.textContent.includes('---')){var bm3=bel3.textContent.match(/([\d.]+)N/);if(bm3){document.getElementById('res-test3').value=bm3[1];document.getElementById('method-test3').value=document.getElementById('bite-device').value;}}
+    // ③ 咬合力: m3a(咬合力計) or m3b(残存歯) のアクティブな方
+    var m3b=document.getElementById('m3b');
+    if(m3b&&m3b.classList.contains('active')){
+      el=document.getElementById('teeth-result');
+      if(el&&!el.textContent.includes('---')){m=el.textContent.match(/(\d+)/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value='teeth';}}
     }else{
-      var tel3=document.getElementById('teeth-result');
-      if(tel3&&!tel3.textContent.includes('---')){var tm3=tel3.textContent.match(/(\d+)/);if(tm3){document.getElementById('res-test3').value=tm3[1];document.getElementById('method-test3').value='teeth';}}
+      el=document.getElementById('bite-result');
+      if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)N/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value=document.getElementById('bite-device').value;}}
     }
-  }else if(ct==='test6'){
-    var m6a=document.getElementById('m6a');
-    if(m6a&&m6a.classList.contains('active')){
-      var gel=document.getElementById('gluco-result');
-      if(gel&&!gel.textContent.includes('---')){var gm=gel.textContent.match(/([\d.]+)mg/);if(gm){document.getElementById('res-test6').value=gm[1];document.getElementById('method-test6').value='glucose';}}
+    // ④ 舌口唇運動
+    if(typeof dkResults!=='undefined'&&(dkResults.pa!==null||dkResults.ta!==null||dkResults.ka!==null)){
+      var rates=[dkResults.pa,dkResults.ta,dkResults.ka].filter(function(r){return r!==null;}).map(function(r){return r.rate;});
+      if(rates.length>0){document.getElementById('res-test4').value=Math.min.apply(null,rates).toFixed(1);}
+    }
+    // ⑤ 低舌圧
+    el=document.getElementById('tongue-result');
+    if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)kPa/);if(m){document.getElementById('res-test5').value=m[1];}}
+    // ⑥ 咀嚼機能: m6a(グルコース) or m6b(咀嚼スコア) のアクティブな方
+    var m6b=document.getElementById('m6b');
+    if(m6b&&m6b.classList.contains('active')){
+      el=document.getElementById('chew-score-result');
+      if(el&&!el.textContent.includes('---')){m=el.textContent.match(/スコア\s*(\d+)/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='score';}}
     }else{
-      var cel=document.getElementById('chew-score-result');
-      if(cel&&!cel.textContent.includes('---')){var cm=cel.textContent.match(/スコア\s*(\d+)/);if(cm){document.getElementById('res-test6').value=cm[1];document.getElementById('method-test6').value='score';}}
+      el=document.getElementById('gluco-result');
+      if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)mg\/dL/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='glucose';}}
     }
-  }else if(ct==='test7'){
+    // ⑦ 嚥下機能: m7a(EAT-10) or m7b(聖隷式) のアクティブな方
     var m7a=document.getElementById('m7a');
     if(m7a&&m7a.classList.contains('active')){
-      var eel=document.getElementById('eat10-result');
-      if(eel&&!eel.textContent.includes('---')){var em=eel.textContent.match(/合計:\s*(\d+)点/);if(em){document.getElementById('res-test7').value=em[1];document.getElementById('method-test7').value='eat10';}}
+      el=document.getElementById('eat10-result');
+      if(el&&!el.textContent.includes('---')){m=el.textContent.match(/合計:\s*(\d+)点/);if(m){document.getElementById('res-test7').value=m[1];document.getElementById('method-test7').value='eat10';}}
     }else{
-      var srel=document.getElementById('seirei-result');
-      if(srel&&!srel.textContent.includes('---')){var sma2=srel.textContent.match(/A:\s*(\d+)/);var smb2=srel.textContent.match(/B:\s*(\d+)/);var av2=sma2?parseInt(sma2[1]):0;var bv2=smb2?parseInt(smb2[1]):0;if(av2>=1){document.getElementById('res-test7').value=av2;document.getElementById('method-test7').value='seirei';}else if(bv2>=4){document.getElementById('res-test7').value=bv2;document.getElementById('method-test7').value='seirei';}}
+      el=document.getElementById('seirei-result');
+      if(el&&!el.textContent.includes('---')){
+        var sa=el.textContent.match(/A:\s*(\d+)/);var sb=el.textContent.match(/B:\s*(\d+)/);
+        var av=sa?parseInt(sa[1]):0;var bv=sb?parseInt(sb[1]):0;
+        if(av>=1){document.getElementById('res-test7').value=av;document.getElementById('method-test7').value='seirei';}
+        else if(bv>=4){document.getElementById('res-test7').value=bv;document.getElementById('method-test7').value='seirei';}
+      }
     }
+    judgeResults();
   }
-  judgeResults();}
 
 
   // === Update Tab Bar Values ===
