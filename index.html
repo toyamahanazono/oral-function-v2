@@ -823,17 +823,29 @@
 /* === Tab Value Display === */
 .tab-val {
   display: block;
-  font-size: 0.55rem;
-  font-weight: 700;
+  font-size: 0.5rem;
+  font-weight: 600;
   line-height: 1;
-  margin-top: 1px;
-  min-height: 0.6rem;
+  margin-top: 2px;
+  min-height: 0.55rem;
   color: var(--grey-600);
+  opacity: 0.7;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80px;
 }
-.tab-val.tv-pass { color: #2E7D32; }
-.tab-val.tv-fail { color: #D32F2F; }
-.tab-val.tv-na { color: #1565C0; font-size: 0.5rem; }
+.tab-val.tv-pass { color: #2E7D32; opacity: 1; font-weight: 700; }
+.tab-val.tv-fail { color: #D32F2F; opacity: 1; font-weight: 700; }
+.tab-val.tv-na { color: #1565C0; font-size: 0.45rem; opacity: 0.8; }
 
+
+/* === Tab Nav Fixed === */
+.tab-nav {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 95 !important;
+}
 /* === Offline indicator === */
 #offline-indicator {
   display: none;
@@ -1013,7 +1025,7 @@
     <div class="card-body">
   <div class="view-toggle" style="padding:0 0 4px;">
     <button class="active" onclick="toggleView(this,'test1','tool')">📏 測定</button>
-    <button onclick="toggleView(this,'test1','manual')">📖 マニュアル</button>
+    <button onclick="toggleView(this,'test1','manual')">📖 マニュアル付き</button>
   </div>
       <p style="font-size:0.8rem;margin-bottom:8px">以下の<strong>いずれか1つ</strong>の方法で評価します。</p>
       <div class="method-tabs">
@@ -1110,6 +1122,25 @@
           </div>
         </div>
 
+        
+        <div class="numpad-wrap">
+          <div class="numpad-display" id="bact-display">--</div>
+          <div class="numpad-grid">
+            <button class="numpad-btn" onclick="bactInput('1')">1</button>
+            <button class="numpad-btn" onclick="bactInput('2')">2</button>
+            <button class="numpad-btn" onclick="bactInput('3')">3</button>
+            <button class="numpad-btn np-clear" onclick="bactInput('C')">C</button>
+            <button class="numpad-btn" onclick="bactInput('4')">4</button>
+            <button class="numpad-btn" onclick="bactInput('5')">5</button>
+            <button class="numpad-btn" onclick="bactInput('6')">6</button>
+            <button class="numpad-btn np-clear" onclick="bactInput('BS')">←</button>
+            <button class="numpad-btn" onclick="bactInput('7')">7</button>
+            <button class="numpad-btn" onclick="bactInput('8')">8</button>
+            <button class="numpad-btn" onclick="bactInput('9')">9</button>
+            <button class="numpad-btn np-ok" onclick="calcBact()">OK</button>
+          </div>
+        </div>
+        <div class="result-value result-none" id="bact-result">判定: ---</div>
         <div class="equip-badge">🔧 口腔内細菌カウンタ（パナソニック）</div>
 
         <div class="img-row">
@@ -1147,7 +1178,7 @@
     <div class="card-body">
   <div class="view-toggle" style="padding:0 0 4px;">
     <button class="active" onclick="toggleView(this,'test2','tool')">📏 測定</button>
-    <button onclick="toggleView(this,'test2','manual')">📖 マニュアル</button>
+    <button onclick="toggleView(this,'test2','manual')">📖 マニュアル付き</button>
   </div>
       <p style="font-size:0.8rem;margin-bottom:8px">以下の<strong>いずれか1つ</strong>の方法で評価します。</p>
       <div class="method-tabs">
@@ -1320,7 +1351,7 @@
     <div class="card-body">
   <div class="view-toggle" style="padding:0 0 4px;">
     <button class="active" onclick="toggleView(this,'test3','tool')">📏 測定</button>
-    <button onclick="toggleView(this,'test3','manual')">📖 マニュアル</button>
+    <button onclick="toggleView(this,'test3','manual')">📖 マニュアル付き</button>
   </div>
       <p style="font-size:0.8rem;margin-bottom:8px">以下の<strong>いずれか1つ</strong>の方法で評価します。</p>
       <div class="method-tabs">
@@ -1478,7 +1509,7 @@
     <div class="card-body">
   <div class="view-toggle" style="padding:0 0 4px;">
     <button class="active" onclick="toggleView(this,'test4','tool')">📏 測定</button>
-    <button onclick="toggleView(this,'test4','manual')">📖 マニュアル</button>
+    <button onclick="toggleView(this,'test4','manual')">📖 マニュアル付き</button>
   </div>
       <div class="criteria">
         <div class="criteria-icon">🔴</div>
@@ -1603,7 +1634,7 @@
     <div class="card-body">
   <div class="view-toggle" style="padding:0 0 4px;">
     <button class="active" onclick="toggleView(this,'test5','tool')">📏 測定</button>
-    <button onclick="toggleView(this,'test5','manual')">📖 マニュアル</button>
+    <button onclick="toggleView(this,'test5','manual')">📖 マニュアル付き</button>
   </div>
       <div class="criteria">
         <div class="criteria-icon">🔴</div>
@@ -1688,7 +1719,7 @@
     <div class="card-body">
   <div class="view-toggle" style="padding:0 0 4px;">
     <button class="active" onclick="toggleView(this,'test6','tool')">📏 測定</button>
-    <button onclick="toggleView(this,'test6','manual')">📖 マニュアル</button>
+    <button onclick="toggleView(this,'test6','manual')">📖 マニュアル付き</button>
   </div>
       <p style="font-size:0.8rem;margin-bottom:8px">以下の<strong>いずれか1つ</strong>の方法で評価します。</p>
       <div class="method-tabs">
@@ -1826,7 +1857,7 @@
     <div class="card-body">
   <div class="view-toggle" style="padding:0 0 4px;">
     <button class="active" onclick="toggleView(this,'test7','tool')">📏 測定</button>
-    <button onclick="toggleView(this,'test7','manual')">📖 マニュアル</button>
+    <button onclick="toggleView(this,'test7','manual')">📖 マニュアル付き</button>
   </div>
       <p style="font-size:0.8rem;margin-bottom:8px">以下の<strong>いずれか1つ</strong>の方法で評価します。</p>
       <div class="method-tabs">
@@ -1972,7 +2003,6 @@
         <div class="label">/ 7 項目 該当</div>
         <div class="verdict" id="diag-verdict">該当なし</div>
       </div>
-      <div class="note" style="margin-top:8px;">3項目以上で「口腔機能低下症」と診断されます。</div>
     </div>
   </div>
       <div style="text-align:center;margin:10px 0;">
@@ -2056,6 +2086,8 @@
 
     updateNavBtns();
     window.scrollTo({top: 0, behavior: 'smooth'});
+    // Sync current tab values
+    if(tabId.startsWith('test'))syncFromTabs();
   }
 
   function navigate(dir) {
@@ -2265,6 +2297,24 @@
   // ===== Teeth =====
   function calcTeeth(){var val=document.getElementById('teeth-count').value,el=document.getElementById('teeth-result');if(!val&&val!=='0'){el.className='result-value result-none';el.textContent='判定: ---';return;}var v=parseInt(val);if(v<20){el.className='result-value result-fail';el.textContent=v+'本 → 該当（20本未満）';}else{el.className='result-value result-pass';el.textContent=v+'本 → 正常';}}
 
+
+  // === Bacteria Counter ===
+  var bactVal='';
+  function bactInput(k){
+    if(k==='C'){bactVal='';document.getElementById('bact-display').textContent='--';return;}
+    if(k==='BS'){bactVal=bactVal.slice(0,-1);document.getElementById('bact-display').textContent=bactVal||'--';return;}
+    if(bactVal.length<2)bactVal+=k;
+    document.getElementById('bact-display').textContent=bactVal;
+  }
+  function calcBact(){
+    var v=parseInt(bactVal)||0;
+    var el=document.getElementById('bact-result');
+    if(!bactVal){el.className='result-value result-none';el.textContent='判定: ---';return;}
+    if(v>=5){el.className='result-value result-fail';el.textContent='レベル'+v+' → 該当（レベル5以上）';}
+    else{el.className='result-value result-pass';el.textContent='レベル'+v+' → 正常';}
+    syncFromTabs();
+  }
+
   // ===== Tongue Pressure (single) =====
   function calcTongue(){var v=document.getElementById('tongue-val').value;var el=document.getElementById('tongue-result');if(!v){el.className='result-value result-none';el.textContent='舌圧: --- kPa';return;}var n=parseFloat(v);if(n<30){el.className='result-value result-fail';el.textContent='舌圧: '+n.toFixed(1)+'kPa → 該当（30kPa未満）';}else{el.className='result-value result-pass';el.textContent='舌圧: '+n.toFixed(1)+'kPa → 正常';}syncFromTabs();}
 
@@ -2302,25 +2352,85 @@
 }
 
   // ===== Sync from tabs =====
-  function syncFromTabs(){var el,m;el=document.getElementById('tci-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)%/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='tci';}}el=document.getElementById('moist-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/測定値:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='moisture';}}el=document.getElementById('saxon-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/増加重量:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='saxon';}}el=document.getElementById('bite-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)N/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value=document.getElementById('bite-device').value;}}el=document.getElementById('teeth-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/(\d+)/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value='teeth';}}if(typeof dkResults!=='undefined'&&(dkResults.pa!==null||dkResults.ta!==null||dkResults.ka!==null)){var rates=[dkResults.pa,dkResults.ta,dkResults.ka].filter(function(r){return r!==null;}).map(function(r){return r.rate;});if(rates.length>0){document.getElementById('res-test4').value=Math.min.apply(null,rates).toFixed(1);}}el=document.getElementById('tongue-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)kPa/);if(m){document.getElementById('res-test5').value=m[1];}}el=document.getElementById('gluco-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)mg\/dL/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='glucose';}}el=document.getElementById('chew-score-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/スコア\s*(\d+)/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='score';}}el=document.getElementById('eat10-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/合計:\s*(\d+)点/);if(m){document.getElementById('res-test7').value=m[1];document.getElementById('method-test7').value='eat10';}}el=document.getElementById('seirei-result');if(el&&!el.textContent.includes('---')){var ma=el.textContent.match(/A:\s*(\d+)/);if(ma&&parseInt(ma[1])>=1){document.getElementById('res-test7').value=ma[1];document.getElementById('method-test7').value='seirei';}else{var mb=el.textContent.match(/B:\s*(\d+)/);if(mb&&parseInt(mb[1])>=4){document.getElementById('res-test7').value='4';document.getElementById('method-test7').value='seirei';}}}judgeResults();}
+  function syncFromTabs(){var el,m;el=document.getElementById('tci-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)%/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='tci';}}el=document.getElementById('bact-result');if(el&&!el.textContent.includes('---')&&!el.textContent.includes('---')){m=el.textContent.match(/レベル(\d+)/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='bacteria';}}el=document.getElementById('moist-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/測定値:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='moisture';}}el=document.getElementById('saxon-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/増加重量:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='saxon';}}el=document.getElementById('bite-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)N/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value=document.getElementById('bite-device').value;}}el=document.getElementById('teeth-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/(\d+)/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value='teeth';}}if(typeof dkResults!=='undefined'&&(dkResults.pa!==null||dkResults.ta!==null||dkResults.ka!==null)){var rates=[dkResults.pa,dkResults.ta,dkResults.ka].filter(function(r){return r!==null;}).map(function(r){return r.rate;});if(rates.length>0){document.getElementById('res-test4').value=Math.min.apply(null,rates).toFixed(1);}}el=document.getElementById('tongue-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)kPa/);if(m){document.getElementById('res-test5').value=m[1];}}el=document.getElementById('gluco-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)mg\/dL/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='glucose';}}el=document.getElementById('chew-score-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/スコア\s*(\d+)/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='score';}}el=document.getElementById('eat10-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/合計:\s*(\d+)点/);if(m){document.getElementById('res-test7').value=m[1];document.getElementById('method-test7').value='eat10';}}el=document.getElementById('seirei-result');if(el&&!el.textContent.includes('---')){var ma=el.textContent.match(/A:\s*(\d+)/);if(ma&&parseInt(ma[1])>=1){document.getElementById('res-test7').value=ma[1];document.getElementById('method-test7').value='seirei';}else{var mb=el.textContent.match(/B:\s*(\d+)/);if(mb&&parseInt(mb[1])>=4){document.getElementById('res-test7').value='4';document.getElementById('method-test7').value='seirei';}}}
+  // Override with active tab's method if applicable
+  var ct=tabs[currentTab];
+  if(ct==='test1'){
+    // Check which method is active
+    var m1a=document.getElementById('m1a');
+    var m1b=document.getElementById('m1b');
+    if(m1b&&m1b.classList.contains('active')){
+      var bel=document.getElementById('bact-result');
+      if(bel&&!bel.textContent.includes('---')){var bm=bel.textContent.match(/(\d+)/);if(bm){document.getElementById('res-test1').value=bm[1];document.getElementById('method-test1').value='bacteria';}}
+    }else{
+      var tel=document.getElementById('tci-result');
+      if(tel&&!tel.textContent.includes('---')){var tm=tel.textContent.match(/([\d.]+)%/);if(tm){document.getElementById('res-test1').value=tm[1];document.getElementById('method-test1').value='tci';}}
+    }
+  }else if(ct==='test2'){
+    var m2a=document.getElementById('m2a');
+    var m2b=document.getElementById('m2b');
+    if(m2b&&m2b.classList.contains('active')){
+      var sel=document.getElementById('saxon-result');
+      if(sel&&!sel.textContent.includes('---')){var sm=sel.textContent.match(/([\d.]+)/);if(sm){document.getElementById('res-test2').value=sm[1];document.getElementById('method-test2').value='saxon';}}
+    }else{
+      var mel2=document.getElementById('moist-result');
+      if(mel2&&!mel2.textContent.includes('---')){var mm=mel2.textContent.match(/([\d.]+)/);if(mm){document.getElementById('res-test2').value=mm[1];document.getElementById('method-test2').value='moisture';}}
+    }
+  }else if(ct==='test3'){
+    var m3a=document.getElementById('m3a');
+    if(m3a&&m3a.classList.contains('active')){
+      var bel3=document.getElementById('bite-result');
+      if(bel3&&!bel3.textContent.includes('---')){var bm3=bel3.textContent.match(/([\d.]+)N/);if(bm3){document.getElementById('res-test3').value=bm3[1];document.getElementById('method-test3').value=document.getElementById('bite-device').value;}}
+    }else{
+      var tel3=document.getElementById('teeth-result');
+      if(tel3&&!tel3.textContent.includes('---')){var tm3=tel3.textContent.match(/(\d+)/);if(tm3){document.getElementById('res-test3').value=tm3[1];document.getElementById('method-test3').value='teeth';}}
+    }
+  }else if(ct==='test6'){
+    var m6a=document.getElementById('m6a');
+    if(m6a&&m6a.classList.contains('active')){
+      var gel=document.getElementById('gluco-result');
+      if(gel&&!gel.textContent.includes('---')){var gm=gel.textContent.match(/([\d.]+)mg/);if(gm){document.getElementById('res-test6').value=gm[1];document.getElementById('method-test6').value='glucose';}}
+    }else{
+      var cel=document.getElementById('chew-score-result');
+      if(cel&&!cel.textContent.includes('---')){var cm=cel.textContent.match(/スコア\s*(\d+)/);if(cm){document.getElementById('res-test6').value=cm[1];document.getElementById('method-test6').value='score';}}
+    }
+  }else if(ct==='test7'){
+    var m7a=document.getElementById('m7a');
+    if(m7a&&m7a.classList.contains('active')){
+      var eel=document.getElementById('eat10-result');
+      if(eel&&!eel.textContent.includes('---')){var em=eel.textContent.match(/合計:\s*(\d+)点/);if(em){document.getElementById('res-test7').value=em[1];document.getElementById('method-test7').value='eat10';}}
+    }else{
+      var srel=document.getElementById('seirei-result');
+      if(srel&&!srel.textContent.includes('---')){var sma=srel.textContent.match(/A:\s*(\d+)/);if(sma&&parseInt(sma[1])>=1){document.getElementById('res-test7').value=sma[1];document.getElementById('method-test7').value='seirei';}else{var smb=srel.textContent.match(/B:\s*(\d+)/);if(smb&&parseInt(smb[1])>=4){document.getElementById('res-test7').value='4';document.getElementById('method-test7').value='seirei';}}}
+    }
+  }
+  judgeResults();}
 
 
   // === Update Tab Bar Values ===
   function updateTabValues(){
+    var units={1:'%',2:'',3:'N',4:'回/秒',5:'kPa',6:'mg/dL',7:'点'};
+    var mnames={tci:'TCI',bacteria:'細菌',moisture:'水分計',saxon:'サクソン',oramo:'Oramo',ps2f:'PSⅡ(F)',ps2n:'PSⅡ(NF)',ps1:'PS旧',teeth:'残存歯',glucose:'グルコース',score:'スコア',seirei:'聖隷式',eat10:'EAT-10'};
+    var munit={tci:'%',bacteria:'Lv',moisture:'',saxon:'g',oramo:'N',ps2f:'N',ps2n:'N',ps1:'N',teeth:'本',glucose:'mg/dL',score:'',seirei:'',eat10:'点'};
     for(var i=1;i<=7;i++){
       var tv=document.getElementById('tv'+i);
       if(!tv)continue;
       var na=document.getElementById('na-test'+i);
       var ve=document.getElementById('res-test'+i);
       var se=document.getElementById('res-status'+i);
+      var mel=document.getElementById('method-test'+i);
+      var mn=mel?mnames[mel.value]||'':'';
+      var mu=mel?munit[mel.value]||units[i]||'':units[i]||'';
       if(na&&na.checked){
-        tv.textContent='N/A';
+        tv.textContent='実施せず';
         tv.className='tab-val tv-na';
       }else if(ve&&ve.value.trim()){
-        tv.textContent=ve.value.trim();
+        var txt=ve.value.trim()+mu;
+        if(mn&&(i===1||i===2||i===3||i===6||i===7))txt=mn+' '+txt;
+        tv.textContent=txt;
         tv.className='tab-val '+(se&&se.textContent==='該当'?'tv-fail':'tv-pass');
       }else{
-        tv.textContent='';
+        tv.textContent='未入力';
         tv.className='tab-val';
       }
     }
@@ -2411,10 +2521,12 @@ if ('serviceWorker' in navigator) {
     if(navigator.clipboard&&navigator.clipboard.writeText){
       navigator.clipboard.writeText(text).then(function(){
         var b=document.getElementById('copy-karte-btn-header');if(b){b.textContent='✓完了';b.style.background='#4CAF50';setTimeout(function(){b.textContent='📋コピー';b.style.background='';},1500);}
+        var b2=document.getElementById('copy-karte-btn');if(b2){b2.textContent='✓ コピー完了';b2.style.background='#4CAF50';setTimeout(function(){b2.textContent='📋 カルテ用テキストをコピー';b2.style.background='';},1500);}
       });
     }else{
       var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
       var b=document.getElementById('copy-karte-btn-header');if(b){b.textContent='✓完了';b.style.background='#4CAF50';setTimeout(function(){b.textContent='📋コピー';b.style.background='';},1500);}
+      var b2=document.getElementById('copy-karte-btn');if(b2){b2.textContent='✓ コピー完了';b2.style.background='#4CAF50';setTimeout(function(){b2.textContent='📋 カルテ用テキストをコピー';b2.style.background='';},1500);}
     }
   }
 
