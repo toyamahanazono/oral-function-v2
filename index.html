@@ -2572,10 +2572,10 @@ if ('serviceWorker' in navigator) {
       if(i===7){
         var m7=mel?mel.value:'seirei';
         if(m7==='eat10'){
-          var s=0;for(var q=1;q<=10;q++){var sb=document.querySelector('#eat10-q'+q+' .q-btn.selected');if(sb)s+=parseInt(sb.dataset.val)||0;}
+          var s=0;document.querySelectorAll('#eat10-form .q-row .q-btn.selected').forEach(function(sb){s+=parseInt(sb.dataset.val)||0;});
           lines.push(nums[i-1]+names[i-1]+': '+mn+' 合計'+s+'点 → '+st);
         }else{
-          var ac=0,bc=0,cc=0;for(var q=1;q<=15;q++){var sb=document.querySelector('#seirei-q'+q+' .q-btn.selected');if(sb){if(sb.dataset.val==='A')ac++;else if(sb.dataset.val==='B')bc++;else if(sb.dataset.val==='C')cc++;}}
+          var ac=0,bc=0,cc=0;document.querySelectorAll('#seirei-form .q-row .q-btn.selected').forEach(function(sb){if(sb.dataset.val==='A')ac++;else if(sb.dataset.val==='B')bc++;else if(sb.dataset.val==='C')cc++;});
           lines.push(nums[i-1]+names[i-1]+': '+mn+' A:'+ac+' B:'+bc+' C:'+cc+' → '+st);
         }
         continue;
