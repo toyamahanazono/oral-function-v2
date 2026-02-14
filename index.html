@@ -66,9 +66,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    position: relative;
+    z-index: 50;
     box-shadow: 0 2px 12px rgba(0,0,0,0.15);
   }
   .header h1 {
@@ -102,9 +101,11 @@
     scrollbar-width: none;
     background: #fff;
     border-bottom: 2px solid var(--grey-200);
-    position: sticky;
-    top: 52px;
-    z-index: 90;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
   }
   .tab-nav::-webkit-scrollbar { display: none; }
 
@@ -550,7 +551,6 @@
   .patient-header-bar input[type="text"] { width: 140px; }
 
   /* タブナビ上部固定位置調整 */
-  .tab-nav { top: auto; position: sticky; }
 
   /* フッター: コンパクト */
   .footer-nav { padding: 6px 16px; }
@@ -842,9 +842,15 @@
 
 /* === Tab Nav Fixed === */
 .tab-nav {
-  position: sticky !important;
+  position: fixed !important;
   top: 0 !important;
-  z-index: 95 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 100 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.content {
+  padding-top: 52px !important;
 }
 /* === Offline indicator === */
 #offline-indicator {
@@ -2010,34 +2016,32 @@
       </div>
 
   <div class="result-card">
-    <div class="result-card-header" style="background:var(--grey-100);">📋 各項目の結果
-      <button onclick="syncFromTabs()" style="border:1px solid var(--teal);background:var(--teal-light);color:var(--teal-dark);padding:4px 10px;border-radius:6px;font-size:0.7rem;font-weight:600;cursor:pointer;font-family:inherit;">各タブから同期</button>
-    </div>
+    <div class="result-card-header" style="background:var(--grey-100);">📋 各項目の結果</div>
     <div class="result-card-body">
-      <div class="result-item"><div class="result-item-num" style="background:#00897B;">①</div><div class="result-item-info"><div class="result-item-name">口腔衛生状態不良</div><div class="result-item-criteria">TCI 50%以上 / 細菌≧3.162×10⁶</div></div><div class="result-item-input"><input type="text" id="res-test1" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status1">--</div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#00897B;">①</div><div class="result-item-info"><div class="result-item-name">口腔衛生状態不良</div><div class="result-item-criteria" id="res-method1">TCI 50%以上</div></div><div class="result-item-input"><input type="text" id="res-test1" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status1">--</div></div>
       <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test1" onchange="judgeResults()"><label for="na-test1">実施せず</label></div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#1565C0;">②</div><div class="result-item-info"><div class="result-item-name">口腔乾燥</div><div class="result-item-criteria">水分計 27.0未満 / サクソン 2g以下</div></div><div class="result-item-input"><input type="text" id="res-test2" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status2">--</div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#1565C0;">②</div><div class="result-item-info"><div class="result-item-name">口腔乾燥</div><div class="result-item-criteria" id="res-method2">口腔水分計 27.0未満</div></div><div class="result-item-input"><input type="text" id="res-test2" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status2">--</div></div>
       <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test2" onchange="judgeResults()"><label for="na-test2">実施せず</label></div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#6A1B9A;">③</div><div class="result-item-info"><div class="result-item-name">咬合力低下</div><div class="result-item-criteria">プレスケールⅡ 350N未満 / 残存歯20本未満</div></div><div class="result-item-input"><input type="text" id="res-test3" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status3">--</div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#6A1B9A;">③</div><div class="result-item-info"><div class="result-item-name">咬合力低下</div><div class="result-item-criteria" id="res-method3">Oramo-bf 375N未満</div></div><div class="result-item-input"><input type="text" id="res-test3" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status3">--</div></div>
       <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test3" onchange="judgeResults()"><label for="na-test3">実施せず</label></div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#E65100;">④</div><div class="result-item-info"><div class="result-item-name">舌口唇運動機能低下</div><div class="result-item-criteria">パタカ いずれか6回/秒未満</div></div><div class="result-item-input"><input type="text" id="res-test4" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status4">--</div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#E65100;">④</div><div class="result-item-info"><div class="result-item-name">舌口唇運動機能低下</div><div class="result-item-criteria" id="res-method4">パタカ いずれか6回/秒未満</div></div><div class="result-item-input"><input type="text" id="res-test4" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status4">--</div></div>
       <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test4" onchange="judgeResults()"><label for="na-test4">実施せず</label></div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#C2185B;">⑤</div><div class="result-item-info"><div class="result-item-name">低舌圧</div><div class="result-item-criteria">最大舌圧 30kPa未満</div></div><div class="result-item-input"><input type="text" id="res-test5" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status5">--</div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#C2185B;">⑤</div><div class="result-item-info"><div class="result-item-name">低舌圧</div><div class="result-item-criteria" id="res-method5">最大舌圧 30kPa未満</div></div><div class="result-item-input"><input type="text" id="res-test5" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status5">--</div></div>
       <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test5" onchange="judgeResults()"><label for="na-test5">実施せず</label></div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#2E7D32;">⑥</div><div class="result-item-info"><div class="result-item-name">咀嚼機能低下</div><div class="result-item-criteria">グルコース 100mg/dL未満 / スコア2以下</div></div><div class="result-item-input"><input type="text" id="res-test6" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status6">--</div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#2E7D32;">⑥</div><div class="result-item-info"><div class="result-item-name">咀嚼機能低下</div><div class="result-item-criteria" id="res-method6">グルコース 100mg/dL未満</div></div><div class="result-item-input"><input type="text" id="res-test6" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status6">--</div></div>
       <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test6" onchange="judgeResults()" checked><label for="na-test6">実施せず</label></div></div>
 
-      <div class="result-item"><div class="result-item-num" style="background:#D32F2F;">⑦</div><div class="result-item-info"><div class="result-item-name">嚥下機能低下</div><div class="result-item-criteria">EAT-10 3点以上 / 聖隷式 A≧1</div></div><div class="result-item-input"><input type="text" id="res-test7" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status7">--</div></div>
+      <div class="result-item"><div class="result-item-num" style="background:#D32F2F;">⑦</div><div class="result-item-info"><div class="result-item-name">嚥下機能低下</div><div class="result-item-criteria" id="res-method7">聖隷式 A≧1またはB≧4</div></div><div class="result-item-input"><input type="text" id="res-test7" placeholder="値" onchange="judgeResults()"></div><div class="result-item-status status-none" id="res-status7">--</div></div>
       <div style="padding:0 0 4px 40px;"><div class="na-check"><input type="checkbox" id="na-test7" onchange="judgeResults()"><label for="na-test7">実施せず</label></div></div>
     </div>
   </div>
 
-  <div class="result-card">
+  <div class="result-card" style="display:none;">
     <div class="result-card-header" style="background:var(--grey-100);">⚙️ 判定方法選択</div>
     <div class="result-card-body">
       <div class="input-group"><label>① 口腔衛生の検査方法</label><select id="method-test1" onchange="judgeResults()"><option value="tci">TCI（%）：50%以上で該当</option><option value="bacteria">細菌カウンタ（CFU/mL）：レベル5以上で該当</option></select></div>
@@ -2113,6 +2117,7 @@
     parent.querySelectorAll('.method-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById(panelId).classList.add('active');
+    syncFromTabs();
   }
 
   // Checklist
@@ -2328,7 +2333,7 @@
   function calcEAT10(){var rows=document.querySelectorAll('#eat10-form .q-row'),t=0,a=0;rows.forEach(function(r){var sel=r.querySelector('.q-btn.selected');if(sel){t+=parseInt(sel.dataset.val);a++;}});var el=document.getElementById('eat10-result');if(a===0){el.className='result-value result-none';el.textContent='合計: --- 点';return;}if(t>=3){el.className='result-value result-fail';el.textContent='合計: '+t+'点 → 該当（3点以上）';}else{el.className='result-value result-pass';el.textContent='合計: '+t+'点 → 正常';}syncFromTabs();}
 
   // ===== Seirei (button-based, A>=1 or B>=4) =====
-  function calcSeirei(){var rows=document.querySelectorAll('#seirei-form .q-row'),ac=0,bc=0,an=0;rows.forEach(function(r){var sel=r.querySelector('.q-btn.selected');if(sel){an++;if(sel.dataset.val==='A')ac++;if(sel.dataset.val==='B')bc++;}});var el=document.getElementById('seirei-result');if(an===0){el.className='result-value result-none';el.textContent='A: --- / B: ---';return;}if(ac>=1||bc>=4){el.className='result-value result-fail';el.textContent='A: '+ac+' / B: '+bc+' → 該当'+(ac>=1?'（A≧1）':'（B≧4）');}else{el.className='result-value result-pass';el.textContent='A: '+ac+' / B: '+bc+' → 正常';}syncFromTabs();}
+  function calcSeirei(){var rows=document.querySelectorAll('#seirei-form .q-row'),ac=0,bc=0,cc=0,an=0;rows.forEach(function(r){var sel=r.querySelector('.q-btn.selected');if(sel){an++;if(sel.dataset.val==='A')ac++;else if(sel.dataset.val==='B')bc++;else if(sel.dataset.val==='C')cc++;}});var el=document.getElementById('seirei-result');if(an===0){el.className='result-value result-none';el.textContent='A: --- / B: --- / C: ---';return;}if(ac>=1||bc>=4){el.className='result-value result-fail';el.textContent='A: '+ac+' B: '+bc+' C: '+cc+' → 該当'+(ac>=1?'（A≧1）':'（B≧4）');}else{el.className='result-value result-pass';el.textContent='A: '+ac+' B: '+bc+' C: '+cc+' → 正常';}syncFromTabs();}
 
   // ===== Integrated Results =====
   function judgeResults(){var fc=0;for(var i=1;i<=7;i++){var na=document.getElementById('na-test'+i).checked,val=document.getElementById('res-test'+i).value.trim(),se=document.getElementById('res-status'+i),ie=document.getElementById('res-test'+i);if(na){se.className='result-item-status status-na';se.textContent='不可';ie.disabled=true;ie.style.opacity='0.4';continue;}ie.disabled=false;ie.style.opacity='1';if(!val){se.className='result-item-status status-none';se.textContent='--';continue;}var v=parseFloat(val),fail=false;if(i===1){var m=document.getElementById('method-test1').value;fail=m==='tci'?v>=50:v>=3162000;}else if(i===2){var m=document.getElementById('method-test2').value;fail=m==='moisture'?v<27.0:v<=2.0;}else if(i===3){var m=document.getElementById('method-test3').value;var th={ps2f:350,ps2n:500,ps1:200,oramo:375,teeth:20};fail=v<th[m];}else if(i===4){fail=v<6.0;}else if(i===5){fail=v<30;}else if(i===6){var m=document.getElementById('method-test6').value;fail=m==='glucose'?v<100:v<=2;}else if(i===7){var m=document.getElementById('method-test7').value;if(m==='eat10')fail=v>=3;else fail=v>=1;}if(fail){se.className='result-item-status status-fail';se.textContent='該当';fc++;}else{se.className='result-item-status status-pass';se.textContent='正常';}}var ce=document.getElementById('diag-count'),ve=document.getElementById('diag-verdict'),be=document.getElementById('diagnosis-box');ce.textContent=fc;if(fc>=3){be.className='diagnosis-result diag-positive';ve.textContent='口腔機能低下症';}else{be.className='diagnosis-result diag-negative';ve.textContent=fc===0?'該当なし':'該当あり（診断基準未満）';}
@@ -2352,7 +2357,7 @@
 }
 
   // ===== Sync from tabs =====
-  function syncFromTabs(){var el,m;el=document.getElementById('tci-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)%/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='tci';}}el=document.getElementById('bact-result');if(el&&!el.textContent.includes('---')&&!el.textContent.includes('---')){m=el.textContent.match(/レベル(\d+)/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='bacteria';}}el=document.getElementById('moist-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/測定値:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='moisture';}}el=document.getElementById('saxon-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/増加重量:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='saxon';}}el=document.getElementById('bite-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)N/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value=document.getElementById('bite-device').value;}}el=document.getElementById('teeth-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/(\d+)/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value='teeth';}}if(typeof dkResults!=='undefined'&&(dkResults.pa!==null||dkResults.ta!==null||dkResults.ka!==null)){var rates=[dkResults.pa,dkResults.ta,dkResults.ka].filter(function(r){return r!==null;}).map(function(r){return r.rate;});if(rates.length>0){document.getElementById('res-test4').value=Math.min.apply(null,rates).toFixed(1);}}el=document.getElementById('tongue-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)kPa/);if(m){document.getElementById('res-test5').value=m[1];}}el=document.getElementById('gluco-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)mg\/dL/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='glucose';}}el=document.getElementById('chew-score-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/スコア\s*(\d+)/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='score';}}el=document.getElementById('eat10-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/合計:\s*(\d+)点/);if(m){document.getElementById('res-test7').value=m[1];document.getElementById('method-test7').value='eat10';}}el=document.getElementById('seirei-result');if(el&&!el.textContent.includes('---')){var ma=el.textContent.match(/A:\s*(\d+)/);if(ma&&parseInt(ma[1])>=1){document.getElementById('res-test7').value=ma[1];document.getElementById('method-test7').value='seirei';}else{var mb=el.textContent.match(/B:\s*(\d+)/);if(mb&&parseInt(mb[1])>=4){document.getElementById('res-test7').value='4';document.getElementById('method-test7').value='seirei';}}}
+  function syncFromTabs(){var el,m;el=document.getElementById('tci-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)%/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='tci';}}el=document.getElementById('bact-result');if(el&&!el.textContent.includes('---')&&!el.textContent.includes('---')){m=el.textContent.match(/レベル(\d+)/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='bacteria';}}el=document.getElementById('moist-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/測定値:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='moisture';}}el=document.getElementById('saxon-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/増加重量:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='saxon';}}el=document.getElementById('bite-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)N/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value=document.getElementById('bite-device').value;}}el=document.getElementById('teeth-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/(\d+)/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value='teeth';}}if(typeof dkResults!=='undefined'&&(dkResults.pa!==null||dkResults.ta!==null||dkResults.ka!==null)){var rates=[dkResults.pa,dkResults.ta,dkResults.ka].filter(function(r){return r!==null;}).map(function(r){return r.rate;});if(rates.length>0){document.getElementById('res-test4').value=Math.min.apply(null,rates).toFixed(1);}}el=document.getElementById('tongue-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)kPa/);if(m){document.getElementById('res-test5').value=m[1];}}el=document.getElementById('gluco-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)mg\/dL/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='glucose';}}el=document.getElementById('chew-score-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/スコア\s*(\d+)/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='score';}}el=document.getElementById('eat10-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/合計:\s*(\d+)点/);if(m){document.getElementById('res-test7').value=m[1];document.getElementById('method-test7').value='eat10';}}el=document.getElementById('seirei-result');if(el&&!el.textContent.includes('---')){var ma=el.textContent.match(/A:\s*(\d+)/);var mb=el.textContent.match(/B:\s*(\d+)/);var av=ma?parseInt(ma[1]):0;var bv=mb?parseInt(mb[1]):0;if(av>=1){document.getElementById('res-test7').value=av;document.getElementById('method-test7').value='seirei';}else if(bv>=4){document.getElementById('res-test7').value=bv;document.getElementById('method-test7').value='seirei';}}
   // Override with active tab's method if applicable
   var ct=tabs[currentTab];
   if(ct==='test1'){
@@ -2401,7 +2406,7 @@
       if(eel&&!eel.textContent.includes('---')){var em=eel.textContent.match(/合計:\s*(\d+)点/);if(em){document.getElementById('res-test7').value=em[1];document.getElementById('method-test7').value='eat10';}}
     }else{
       var srel=document.getElementById('seirei-result');
-      if(srel&&!srel.textContent.includes('---')){var sma=srel.textContent.match(/A:\s*(\d+)/);if(sma&&parseInt(sma[1])>=1){document.getElementById('res-test7').value=sma[1];document.getElementById('method-test7').value='seirei';}else{var smb=srel.textContent.match(/B:\s*(\d+)/);if(smb&&parseInt(smb[1])>=4){document.getElementById('res-test7').value='4';document.getElementById('method-test7').value='seirei';}}}
+      if(srel&&!srel.textContent.includes('---')){var sma2=srel.textContent.match(/A:\s*(\d+)/);var smb2=srel.textContent.match(/B:\s*(\d+)/);var av2=sma2?parseInt(sma2[1]):0;var bv2=smb2?parseInt(smb2[1]):0;if(av2>=1){document.getElementById('res-test7').value=av2;document.getElementById('method-test7').value='seirei';}else if(bv2>=4){document.getElementById('res-test7').value=bv2;document.getElementById('method-test7').value='seirei';}}
     }
   }
   judgeResults();}
@@ -2410,6 +2415,18 @@
   // === Update Tab Bar Values ===
   function updateTabValues(){
     var units={1:'%',2:'',3:'N',4:'回/秒',5:'kPa',6:'mg/dL',7:'点'};
+    // Special: seirei result text for tab bar
+    var seireiTab='';
+    var mel7=document.getElementById('method-test7');
+    if(mel7&&mel7.value==='seirei'){
+      var srel=document.getElementById('seirei-result');
+      if(srel&&!srel.textContent.includes('---')){
+        var sm1=srel.textContent.match(/A:\s*(\d+)/);
+        var sm2=srel.textContent.match(/B:\s*(\d+)/);
+        var sm3=srel.textContent.match(/C:\s*(\d+)/);
+        seireiTab='A:'+((sm1?sm1[1]:'0'))+' B:'+((sm2?sm2[1]:'0'))+' C:'+((sm3?sm3[1]:'0'));
+      }
+    }
     var mnames={tci:'TCI',bacteria:'細菌',moisture:'水分計',saxon:'サクソン',oramo:'Oramo',ps2f:'PSⅡ(F)',ps2n:'PSⅡ(NF)',ps1:'PS旧',teeth:'残存歯',glucose:'グルコース',score:'スコア',seirei:'聖隷式',eat10:'EAT-10'};
     var munit={tci:'%',bacteria:'Lv',moisture:'',saxon:'g',oramo:'N',ps2f:'N',ps2n:'N',ps1:'N',teeth:'本',glucose:'mg/dL',score:'',seirei:'',eat10:'点'};
     for(var i=1;i<=7;i++){
@@ -2427,6 +2444,7 @@
       }else if(ve&&ve.value.trim()){
         var txt=ve.value.trim()+mu;
         if(mn&&(i===1||i===2||i===3||i===6||i===7))txt=mn+' '+txt;
+        if(i===7&&seireiTab&&mel7&&mel7.value==='seirei')txt='聖隷式 '+seireiTab;
         tv.textContent=txt;
         tv.className='tab-val '+(se&&se.textContent==='該当'?'tv-fail':'tv-pass');
       }else{
@@ -2434,6 +2452,20 @@
         tv.className='tab-val';
       }
     }
+    // Update result method labels
+    var mLabels={
+      tci:'TCI 50%以上',bacteria:'細菌カウンタ Lv5以上',
+      moisture:'口腔水分計 27.0未満',saxon:'サクソンテスト 2g以下',
+      oramo:'Oramo-bf 375N未満',ps2f:'PSⅡフィルタあり 350N未満',ps2n:'PSⅡフィルタなし 500N未満',ps1:'PS旧 200N未満',teeth:'残存歯 20本未満',
+      glucose:'グルコース 100mg/dL未満',score:'咀嚼能率スコア 2以下',
+      seirei:'聖隷式 A≧1またはB≧4',eat10:'EAT-10 3点以上'
+    };
+    var mIds=[1,2,3,6,7];
+    mIds.forEach(function(i){
+      var mel=document.getElementById('method-test'+i);
+      var lel=document.getElementById('res-method'+i);
+      if(mel&&lel){lel.textContent=mLabels[mel.value]||'';}
+    });
   }
 
   // Set today's date & run initial judge
