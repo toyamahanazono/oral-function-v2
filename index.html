@@ -768,6 +768,23 @@
 }
 
 
+
+/* === Header Karte Copy Button === */
+.ph-copy-btn {
+  background: rgba(255,255,255,0.25);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.ph-copy-btn:active { background: rgba(255,255,255,0.5); }
+
 /* === Header Diagnosis Badge === */
 .ph-diag {
   display: flex;
@@ -802,6 +819,21 @@
 .ph-diag.diag-neg { background: rgba(46,125,50,0.5); }
 .ph-diag.diag-neg .ph-diag-verdict { background: #2E7D32; }
 
+
+/* === Tab Value Display === */
+.tab-val {
+  display: block;
+  font-size: 0.55rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: 1px;
+  min-height: 0.6rem;
+  color: var(--grey-600);
+}
+.tab-val.tv-pass { color: #2E7D32; }
+.tab-val.tv-fail { color: #D32F2F; }
+.tab-val.tv-na { color: #1565C0; font-size: 0.5rem; }
+
 /* === Offline indicator === */
 #offline-indicator {
   display: none;
@@ -831,6 +863,7 @@
 .test-compact img:not(.tci-img) { display:none !important; }
 .test-compact .card-body > p,
 .test-compact .method-panel > p { display:none !important; }
+.test-compact .view-toggle { display:flex !important; }
 
 /* === Compact Numpad === */
 .numpad-wrap { margin:4px 0; max-width:280px; }
@@ -843,45 +876,6 @@
 .tci-grid { gap:4px !important; }
 
 
-/* === Test Summary Bar === */
-.test-summary-bar {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: var(--shadow);
-  padding: 8px 10px;
-  margin-top: 8px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px;
-}
-.tsb-item {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  font-size: 0.65rem;
-  padding: 3px 6px;
-  border-radius: 5px;
-  background: var(--grey-100);
-  color: var(--grey-600);
-  min-width: 0;
-  white-space: nowrap;
-}
-.tsb-item.current {
-  border: 2px solid var(--teal);
-  background: var(--teal-light);
-  color: var(--teal-dark);
-  font-weight: 700;
-}
-.tsb-num {
-  font-weight: 900;
-  font-size: 0.6rem;
-}
-.tsb-val {
-  font-weight: 600;
-}
-.tsb-item.s-pass { background: #E8F5E9; color: #2E7D32; }
-.tsb-item.s-fail { background: #FFEBEE; color: #D32F2F; }
-.tsb-item.s-na { background: #E3F2FD; color: #1565C0; }
 
 /* === Compact Questionnaire === */
 .q-row { margin-bottom:3px !important; padding:3px !important; }
@@ -905,6 +899,7 @@
       <span class="ph-diag-count" id="header-diag-count">0</span><span class="ph-diag-label">/7</span>
       <span class="ph-diag-verdict" id="header-diag-verdict">--</span>
     </div>
+    <button id="copy-karte-btn-header" onclick="copyKarteText()" class="ph-copy-btn">📋コピー</button>
   </div>
 </div>
 
@@ -913,13 +908,14 @@
 <!-- ═══ TAB NAVIGATION ═══ -->
 <div class="tab-nav" id="tabNav">
   <button class="tab-btn active" data-tab="overview"><span class="num">📋</span>概要</button>
-  <button class="tab-btn" data-tab="test1"><span class="num">①</span>口腔衛生</button>
-  <button class="tab-btn" data-tab="test2"><span class="num">②</span>口腔乾燥</button>
-  <button class="tab-btn" data-tab="test3"><span class="num">③</span>咬合力</button>
-  <button class="tab-btn" data-tab="test4"><span class="num">④</span>舌口唇運動</button>
-  <button class="tab-btn" data-tab="test5"><span class="num">⑤</span>低舌圧</button>
-  <button class="tab-btn" data-tab="test6"><span class="num">⑥</span>咀嚼機能</button>
-  <button class="tab-btn" data-tab="test7"><span class="num">⑦</span>嚥下機能</button>
+  <button class="tab-btn" data-tab="test1"><span class="num">①</span>口腔衛生<span class="tab-val" id="tv1"></span></button>
+  <button class="tab-btn" data-tab="test2"><span class="num">②</span>口腔乾燥<span class="tab-val" id="tv2"></span></button>
+  <button class="tab-btn" data-tab="test3"><span class="num">③</span>咬合力<span class="tab-val" id="tv3"></span></button>
+  <button class="tab-btn" data-tab="test4"><span class="num">④</span>舌口唇運動<span class="tab-val" id="tv4"></span></button>
+  <button class="tab-btn" data-tab="test5"><span class="num">⑤</span>低舌圧<span class="tab-val" id="tv5"></span></button>
+  <button class="tab-btn" data-tab="test6"><span class="num">⑥</span>咀嚼機能<span class="tab-val" id="tv6"></span></button>
+  <button class="tab-btn" data-tab="test7"><span class="num">⑦</span>嚥下機能<span class="tab-val" id="tv7"></span></button>
+  <button class="tab-btn" data-tab="results"><span class="num">📊</span>総合判定</button>
 </div>
 
 <!-- ═══ CONTENT ═══ -->
@@ -1008,15 +1004,6 @@
       </div>
     </div>
   </div>
-<div class="test-summary-bar" id="summary-bar-overview">
-  <div class="tsb-item C1" id="tsb1-overview"><span class="tsb-num">①</span><span class="tsb-val" id="tsv1-overview">--</span></div>
-  <div class="tsb-item C2" id="tsb2-overview"><span class="tsb-num">②</span><span class="tsb-val" id="tsv2-overview">--</span></div>
-  <div class="tsb-item C3" id="tsb3-overview"><span class="tsb-num">③</span><span class="tsb-val" id="tsv3-overview">--</span></div>
-  <div class="tsb-item C4" id="tsb4-overview"><span class="tsb-num">④</span><span class="tsb-val" id="tsv4-overview">--</span></div>
-  <div class="tsb-item C5" id="tsb5-overview"><span class="tsb-num">⑤</span><span class="tsb-val" id="tsv5-overview">--</span></div>
-  <div class="tsb-item C6" id="tsb6-overview"><span class="tsb-num">⑥</span><span class="tsb-val" id="tsv6-overview">--</span></div>
-  <div class="tsb-item C7" id="tsb7-overview"><span class="tsb-num">⑦</span><span class="tsb-val" id="tsv7-overview">--</span></div>
-</div>
 </div>
 
 <!-- ──── ① 口腔衛生状態不良 ──── -->
@@ -1151,15 +1138,6 @@
       </div>
     </div>
   </div>
-<div class="test-summary-bar" id="summary-bar-t1">
-  <div class="tsb-item C1 current" id="tsb1-t1"><span class="tsb-num">①</span><span class="tsb-val" id="tsv1-t1">--</span></div>
-  <div class="tsb-item C2" id="tsb2-t1"><span class="tsb-num">②</span><span class="tsb-val" id="tsv2-t1">--</span></div>
-  <div class="tsb-item C3" id="tsb3-t1"><span class="tsb-num">③</span><span class="tsb-val" id="tsv3-t1">--</span></div>
-  <div class="tsb-item C4" id="tsb4-t1"><span class="tsb-num">④</span><span class="tsb-val" id="tsv4-t1">--</span></div>
-  <div class="tsb-item C5" id="tsb5-t1"><span class="tsb-num">⑤</span><span class="tsb-val" id="tsv5-t1">--</span></div>
-  <div class="tsb-item C6" id="tsb6-t1"><span class="tsb-num">⑥</span><span class="tsb-val" id="tsv6-t1">--</span></div>
-  <div class="tsb-item C7" id="tsb7-t1"><span class="tsb-num">⑦</span><span class="tsb-val" id="tsv7-t1">--</span></div>
-</div>
 </div>
 
 <!-- ──── ② 口腔乾燥 ──── -->
@@ -1333,15 +1311,6 @@
       </div>
     </div>
   </div>
-<div class="test-summary-bar" id="summary-bar-t2">
-  <div class="tsb-item C1" id="tsb1-t2"><span class="tsb-num">①</span><span class="tsb-val" id="tsv1-t2">--</span></div>
-  <div class="tsb-item C2 current" id="tsb2-t2"><span class="tsb-num">②</span><span class="tsb-val" id="tsv2-t2">--</span></div>
-  <div class="tsb-item C3" id="tsb3-t2"><span class="tsb-num">③</span><span class="tsb-val" id="tsv3-t2">--</span></div>
-  <div class="tsb-item C4" id="tsb4-t2"><span class="tsb-num">④</span><span class="tsb-val" id="tsv4-t2">--</span></div>
-  <div class="tsb-item C5" id="tsb5-t2"><span class="tsb-num">⑤</span><span class="tsb-val" id="tsv5-t2">--</span></div>
-  <div class="tsb-item C6" id="tsb6-t2"><span class="tsb-num">⑥</span><span class="tsb-val" id="tsv6-t2">--</span></div>
-  <div class="tsb-item C7" id="tsb7-t2"><span class="tsb-num">⑦</span><span class="tsb-val" id="tsv7-t2">--</span></div>
-</div>
 </div>
 
 <!-- ──── ③ 咬合力低下 ──── -->
@@ -1500,15 +1469,6 @@
       </div>
     </div>
   </div>
-<div class="test-summary-bar" id="summary-bar-t3">
-  <div class="tsb-item C1" id="tsb1-t3"><span class="tsb-num">①</span><span class="tsb-val" id="tsv1-t3">--</span></div>
-  <div class="tsb-item C2" id="tsb2-t3"><span class="tsb-num">②</span><span class="tsb-val" id="tsv2-t3">--</span></div>
-  <div class="tsb-item C3 current" id="tsb3-t3"><span class="tsb-num">③</span><span class="tsb-val" id="tsv3-t3">--</span></div>
-  <div class="tsb-item C4" id="tsb4-t3"><span class="tsb-num">④</span><span class="tsb-val" id="tsv4-t3">--</span></div>
-  <div class="tsb-item C5" id="tsb5-t3"><span class="tsb-num">⑤</span><span class="tsb-val" id="tsv5-t3">--</span></div>
-  <div class="tsb-item C6" id="tsb6-t3"><span class="tsb-num">⑥</span><span class="tsb-val" id="tsv6-t3">--</span></div>
-  <div class="tsb-item C7" id="tsb7-t3"><span class="tsb-num">⑦</span><span class="tsb-val" id="tsv7-t3">--</span></div>
-</div>
 </div>
 
 <!-- ──── ④ 舌口唇運動機能低下 ──── -->
@@ -1634,15 +1594,6 @@
 
     </div>
   </div>
-<div class="test-summary-bar" id="summary-bar-t4">
-  <div class="tsb-item C1" id="tsb1-t4"><span class="tsb-num">①</span><span class="tsb-val" id="tsv1-t4">--</span></div>
-  <div class="tsb-item C2" id="tsb2-t4"><span class="tsb-num">②</span><span class="tsb-val" id="tsv2-t4">--</span></div>
-  <div class="tsb-item C3" id="tsb3-t4"><span class="tsb-num">③</span><span class="tsb-val" id="tsv3-t4">--</span></div>
-  <div class="tsb-item C4 current" id="tsb4-t4"><span class="tsb-num">④</span><span class="tsb-val" id="tsv4-t4">--</span></div>
-  <div class="tsb-item C5" id="tsb5-t4"><span class="tsb-num">⑤</span><span class="tsb-val" id="tsv5-t4">--</span></div>
-  <div class="tsb-item C6" id="tsb6-t4"><span class="tsb-num">⑥</span><span class="tsb-val" id="tsv6-t4">--</span></div>
-  <div class="tsb-item C7" id="tsb7-t4"><span class="tsb-num">⑦</span><span class="tsb-val" id="tsv7-t4">--</span></div>
-</div>
 </div>
 
 <!-- ──── ⑤ 低舌圧 ──── -->
@@ -1728,15 +1679,6 @@
       <div class="note">プローブは使い捨てです。患者ごとに新しいプローブを使用してください。</div>
     </div>
   </div>
-<div class="test-summary-bar" id="summary-bar-t5">
-  <div class="tsb-item C1" id="tsb1-t5"><span class="tsb-num">①</span><span class="tsb-val" id="tsv1-t5">--</span></div>
-  <div class="tsb-item C2" id="tsb2-t5"><span class="tsb-num">②</span><span class="tsb-val" id="tsv2-t5">--</span></div>
-  <div class="tsb-item C3" id="tsb3-t5"><span class="tsb-num">③</span><span class="tsb-val" id="tsv3-t5">--</span></div>
-  <div class="tsb-item C4" id="tsb4-t5"><span class="tsb-num">④</span><span class="tsb-val" id="tsv4-t5">--</span></div>
-  <div class="tsb-item C5 current" id="tsb5-t5"><span class="tsb-num">⑤</span><span class="tsb-val" id="tsv5-t5">--</span></div>
-  <div class="tsb-item C6" id="tsb6-t5"><span class="tsb-num">⑥</span><span class="tsb-val" id="tsv6-t5">--</span></div>
-  <div class="tsb-item C7" id="tsb7-t5"><span class="tsb-num">⑦</span><span class="tsb-val" id="tsv7-t5">--</span></div>
-</div>
 </div>
 
 <!-- ──── ⑥ 咀嚼機能低下 ──── -->
@@ -1875,15 +1817,6 @@
       </div>
     </div>
   </div>
-<div class="test-summary-bar" id="summary-bar-t6">
-  <div class="tsb-item C1" id="tsb1-t6"><span class="tsb-num">①</span><span class="tsb-val" id="tsv1-t6">--</span></div>
-  <div class="tsb-item C2" id="tsb2-t6"><span class="tsb-num">②</span><span class="tsb-val" id="tsv2-t6">--</span></div>
-  <div class="tsb-item C3" id="tsb3-t6"><span class="tsb-num">③</span><span class="tsb-val" id="tsv3-t6">--</span></div>
-  <div class="tsb-item C4" id="tsb4-t6"><span class="tsb-num">④</span><span class="tsb-val" id="tsv4-t6">--</span></div>
-  <div class="tsb-item C5" id="tsb5-t6"><span class="tsb-num">⑤</span><span class="tsb-val" id="tsv5-t6">--</span></div>
-  <div class="tsb-item C6 current" id="tsb6-t6"><span class="tsb-num">⑥</span><span class="tsb-val" id="tsv6-t6">--</span></div>
-  <div class="tsb-item C7" id="tsb7-t6"><span class="tsb-num">⑦</span><span class="tsb-val" id="tsv7-t6">--</span></div>
-</div>
 </div>
 
 <!-- ──── ⑦ 嚥下機能低下 ──── -->
@@ -2020,21 +1953,12 @@
         </div>
       </div>
     </div>
-  <div class="test-summary-bar" id="summary-bar-t7">
-  <div class="tsb-item" id="tsb1-t7"><span class="tsb-num">①</span><span class="tsb-val" id="tsv1-t7">--</span></div>
-  <div class="tsb-item" id="tsb2-t7"><span class="tsb-num">②</span><span class="tsb-val" id="tsv2-t7">--</span></div>
-  <div class="tsb-item" id="tsb3-t7"><span class="tsb-num">③</span><span class="tsb-val" id="tsv3-t7">--</span></div>
-  <div class="tsb-item" id="tsb4-t7"><span class="tsb-num">④</span><span class="tsb-val" id="tsv4-t7">--</span></div>
-  <div class="tsb-item" id="tsb5-t7"><span class="tsb-num">⑤</span><span class="tsb-val" id="tsv5-t7">--</span></div>
-  <div class="tsb-item" id="tsb6-t7"><span class="tsb-num">⑥</span><span class="tsb-val" id="tsv6-t7">--</span></div>
-  <div class="tsb-item current" id="tsb7-t7"><span class="tsb-num">⑦</span><span class="tsb-val" id="tsv7-t7">--</span></div>
-</div>
-</div>
+  </div>
 </div>
 
 
-<!-- hidden data store for results -->
-<div id="results" style="display:none !important;">
+<!-- ──── 📊 総合判定 ──── -->
+<div class="tab-panel" id="results">
   <div class="patient-info-bar" style="display:none;">
     <div class="input-group"><label>患者名</label><input type="text" id="patient-name" placeholder="氏名を入力"></div>
     <div class="input-group"><label>実施日</label><input type="date" id="exam-date"></div>
@@ -2101,7 +2025,6 @@
 <!-- ═══ FOOTER NAV ═══ -->
 <div class="footer-nav">
   <button class="footer-btn prev" id="prevBtn" onclick="navigate(-1)" disabled>◀ 前の検査</button>
-  <button id="copy-karte-btn-footer" onclick="copyKarteText()" style="flex-shrink:0;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:0.7rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">📋 カルテコピー</button>
   <button class="footer-btn next" id="nextBtn" onclick="navigate(1)">次の検査 ▶</button>
 </div>
 
@@ -2109,7 +2032,7 @@
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
 
 <script>
-  const tabs = ['overview','test1','test2','test3','test4','test5','test6','test7'];
+  const tabs = ['overview','test1','test2','test3','test4','test5','test6','test7','results'];
   let currentTab = 0;
 
   // Tab switching
@@ -2146,7 +2069,7 @@
     document.getElementById('prevBtn').disabled = currentTab === 0;
     document.getElementById('nextBtn').disabled = currentTab === tabs.length - 1;
 
-    const labels = ['概要','①口腔衛生','②口腔乾燥','③咬合力','④舌口唇運動','⑤低舌圧','⑥咀嚼機能','⑦嚥下機能'];
+    const labels = ['概要','①口腔衛生','②口腔乾燥','③咬合力','④舌口唇運動','⑤低舌圧','⑥咀嚼機能','⑦嚥下機能','📊総合判定'];
     document.getElementById('prevBtn').textContent = currentTab > 0 ? `◀ ${labels[currentTab-1]}` : '◀ 前の検査';
     document.getElementById('nextBtn').textContent = currentTab < tabs.length-1 ? `${labels[currentTab+1]} ▶` : '次の検査 ▶';
   }
@@ -2374,47 +2297,33 @@
     if(hd)hd.className='ph-diag diag-neg';
     if(hv)hv.textContent='該当なし';
   }
-  // Update all summary bars
-  updateSummaryBars();
+  // Update tab bar values
+  updateTabValues();
 }
 
   // ===== Sync from tabs =====
   function syncFromTabs(){var el,m;el=document.getElementById('tci-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)%/);if(m){document.getElementById('res-test1').value=m[1];document.getElementById('method-test1').value='tci';}}el=document.getElementById('moist-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/測定値:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='moisture';}}el=document.getElementById('saxon-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/増加重量:\s*([\d.]+)/);if(m){document.getElementById('res-test2').value=m[1];document.getElementById('method-test2').value='saxon';}}el=document.getElementById('bite-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)N/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value=document.getElementById('bite-device').value;}}el=document.getElementById('teeth-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/(\d+)/);if(m){document.getElementById('res-test3').value=m[1];document.getElementById('method-test3').value='teeth';}}if(typeof dkResults!=='undefined'&&(dkResults.pa!==null||dkResults.ta!==null||dkResults.ka!==null)){var rates=[dkResults.pa,dkResults.ta,dkResults.ka].filter(function(r){return r!==null;}).map(function(r){return r.rate;});if(rates.length>0){document.getElementById('res-test4').value=Math.min.apply(null,rates).toFixed(1);}}el=document.getElementById('tongue-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)kPa/);if(m){document.getElementById('res-test5').value=m[1];}}el=document.getElementById('gluco-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/([\d.]+)mg\/dL/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='glucose';}}el=document.getElementById('chew-score-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/スコア\s*(\d+)/);if(m){document.getElementById('res-test6').value=m[1];document.getElementById('method-test6').value='score';}}el=document.getElementById('eat10-result');if(el&&!el.textContent.includes('---')){m=el.textContent.match(/合計:\s*(\d+)点/);if(m){document.getElementById('res-test7').value=m[1];document.getElementById('method-test7').value='eat10';}}el=document.getElementById('seirei-result');if(el&&!el.textContent.includes('---')){var ma=el.textContent.match(/A:\s*(\d+)/);if(ma&&parseInt(ma[1])>=1){document.getElementById('res-test7').value=ma[1];document.getElementById('method-test7').value='seirei';}else{var mb=el.textContent.match(/B:\s*(\d+)/);if(mb&&parseInt(mb[1])>=4){document.getElementById('res-test7').value='4';document.getElementById('method-test7').value='seirei';}}}judgeResults();}
 
 
-  // === Update Summary Bars across all test panels ===
-  function updateSummaryBars(){
-    var names=['①衛生','②乾燥','③咬合','④運動','⑤舌圧','⑥咀嚼','⑦嚥下'];
-    var vals=[], statuses=[];
+  // === Update Tab Bar Values ===
+  function updateTabValues(){
     for(var i=1;i<=7;i++){
+      var tv=document.getElementById('tv'+i);
+      if(!tv)continue;
       var na=document.getElementById('na-test'+i);
       var ve=document.getElementById('res-test'+i);
       var se=document.getElementById('res-status'+i);
       if(na&&na.checked){
-        vals.push('N/A');
-        statuses.push('na');
+        tv.textContent='N/A';
+        tv.className='tab-val tv-na';
       }else if(ve&&ve.value.trim()){
-        vals.push(ve.value.trim());
-        statuses.push(se&&se.textContent==='該当'?'fail':'pass');
+        tv.textContent=ve.value.trim();
+        tv.className='tab-val '+(se&&se.textContent==='該当'?'tv-fail':'tv-pass');
       }else{
-        vals.push('--');
-        statuses.push('');
+        tv.textContent='';
+        tv.className='tab-val';
       }
     }
-    // Update bars in overview + test1-7
-    var panels=['overview','t1','t2','t3','t4','t5','t6','t7'];
-    panels.forEach(function(p){
-      for(var i=1;i<=7;i++){
-        var item=document.getElementById('tsb'+i+'-'+p);
-        var val=document.getElementById('tsv'+i+'-'+p);
-        if(!item||!val)continue;
-        val.textContent=vals[i-1];
-        item.className='tsb-item'+(item.classList.contains('current')?' current':'');
-        if(statuses[i-1]==='fail')item.classList.add('s-fail');
-        else if(statuses[i-1]==='pass')item.classList.add('s-pass');
-        else if(statuses[i-1]==='na')item.classList.add('s-na');
-      }
-    });
   }
 
   // Set today's date & run initial judge
@@ -2501,40 +2410,12 @@ if ('serviceWorker' in navigator) {
     var text=lines.join('\n');
     if(navigator.clipboard&&navigator.clipboard.writeText){
       navigator.clipboard.writeText(text).then(function(){
-        var b=document.getElementById('copy-karte-btn');b.textContent='✓ コピー完了';b.style.background='#4CAF50';
-        setTimeout(function(){b.textContent='📋 カルテ用テキストをコピー';b.style.background='';},2000);
+        var b=document.getElementById('copy-karte-btn-header');if(b){b.textContent='✓完了';b.style.background='#4CAF50';setTimeout(function(){b.textContent='📋コピー';b.style.background='';},1500);}
       });
     }else{
       var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-      var b=document.getElementById('copy-karte-btn-footer');if(b){b.textContent='✓ コピー完了';b.style.background='#4CAF50';setTimeout(function(){b.textContent='📋 カルテコピー';b.style.background='var(--blue)';},2000);}
+      var b=document.getElementById('copy-karte-btn-header');if(b){b.textContent='✓完了';b.style.background='#4CAF50';setTimeout(function(){b.textContent='📋コピー';b.style.background='';},1500);}
     }
-  }
-      if(i===4){
-        if(typeof dkResults!=='undefined'){
-          var pv=dkResults.pa,tv=dkResults.ta,kv=dkResults.ka;
-          document.getElementById('plan-v4a').textContent=pv?pv.rate.toFixed(1)+'回/秒':'-';
-          document.getElementById('plan-j4a').textContent=pv?(pv.rate<6?'低下':'正常範囲内'):'-';
-          document.getElementById('plan-v4b').textContent=tv?tv.rate.toFixed(1)+'回/秒':'-';
-          document.getElementById('plan-j4b').textContent=tv?(tv.rate<6?'低下':'正常範囲内'):'-';
-          document.getElementById('plan-v4c').textContent=kv?kv.rate.toFixed(1)+'回/秒':'-';
-          document.getElementById('plan-j4c').textContent=kv?(kv.rate<6?'低下':'正常範囲内'):'-';
-          var pOk=!pv||pv.rate>=6,tOk=!tv||tv.rate>=6,kOk=!kv||kv.rate>=6;
-          var r4=document.querySelector('input[name="goal4"][value="'+(pOk?'1':'3')+'"]');if(r4)r4.checked=true;
-          var r5=document.querySelector('input[name="goal5"][value="'+(tOk?'1':'3')+'"]');if(r5)r5.checked=true;
-          var r6=document.querySelector('input[name="goal6"][value="'+(kOk?'1':'3')+'"]');if(r6)r6.checked=true;
-        }
-      }else{
-        var ve=document.getElementById('plan-v'+i),je=document.getElementById('plan-j'+i);
-        if(ve){ve.textContent=val;je.textContent=mapped;}
-        var gi=i<=3?i:(i===5?7:(i===6?8:9));
-        var gv=(st==='正常'||st==='--')?'1':'3';
-        if(na&&na.checked)gv='1';
-        var gr=document.querySelector('input[name="goal'+gi+'"][value="'+gv+'"]');
-        if(gr)gr.checked=true;
-      }
-    }
-    var ed=document.getElementById('exam-date').value;
-    if(ed){var d=new Date(ed);d.setMonth(d.getMonth()+6);document.getElementById('plan-reeval-date').value=d.toISOString().split('T')[0];}
   }
 
 </script>
