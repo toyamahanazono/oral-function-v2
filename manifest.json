@@ -1,0 +1,24 @@
+{
+  "name": "口腔機能精密検査マニュアル",
+  "short_name": "口腔機能検査",
+  "description": "口腔機能低下症の検査・診断支援アプリ",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#00695C",
+  "theme_color": "#00695C",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
