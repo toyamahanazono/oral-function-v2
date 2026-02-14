@@ -848,7 +848,6 @@
 /* === Tab Nav Fixed === */
 .tab-nav {
   position: fixed !important;
-  top: 0 !important;
   left: 0 !important;
   right: 0 !important;
   z-index: 100 !important;
@@ -2433,13 +2432,14 @@
     var tnav=document.getElementById('tabNav');
     if(hdr&&tnav){
       var hh=hdr.offsetHeight;
-      tnav.style.top=hh+'px';
+      tnav.style.setProperty('top',hh+'px','important');
       var content=document.querySelector('.content');
       if(content){content.style.paddingTop=(hh+tnav.offsetHeight+4)+'px';}
     }
   }
   window.addEventListener('load',adjustLayout);
   window.addEventListener('resize',adjustLayout);
+  setTimeout(adjustLayout,100);
 
   // === Update Tab Bar Values ===
   function updateTabValues(){
