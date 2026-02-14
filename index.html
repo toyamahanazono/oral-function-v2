@@ -92,23 +92,7 @@
     gap: 4px;
   }
 
-  /* ── Diagnosis banner ── */
-  .diagnosis-banner {
-    background: linear-gradient(90deg, var(--red) 0%, #E53935 100%);
-    color: #fff;
-    text-align: center;
-    padding: 8px 16px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
-  }
-  .diagnosis-banner span {
-    background: rgba(255,255,255,0.25);
-    padding: 2px 10px;
-    border-radius: 4px;
-    margin-left: 6px;
-    font-size: 1.1rem;
-  }
+  
 
   /* ── Tab Navigation ── */
   .tab-nav {
@@ -663,103 +647,6 @@
   .q-btn.sel-B { background:#FF9800; border-color:#FF9800; color:#fff; }
   .q-btn.sel-C { background:#4CAF50; border-color:#4CAF50; color:#fff; }
 
-/* === iOS Install Guide Banner === */
-#ios-install-banner {
-  display: none;
-  position: fixed;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #fff;
-  color: #333;
-  padding: 16px 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
-  z-index: 10000;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  max-width: 92vw;
-  width: 340px;
-  text-align: center;
-}
-#ios-install-banner .ios-title {
-  font-weight: 700;
-  font-size: 15px;
-  color: #00695C;
-}
-#ios-install-banner .ios-steps {
-  text-align: left;
-  line-height: 1.8;
-  font-size: 13px;
-}
-#ios-install-banner .ios-steps .step-icon {
-  display: inline-block;
-  width: 22px;
-  text-align: center;
-  margin-right: 4px;
-}
-#ios-install-banner .ios-arrow {
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid #fff;
-}
-#ios-install-banner .ios-btn-close {
-  background: #00695C;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 24px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 4px;
-}
-
-/* === PWA Install Banner === */
-#pwa-install-banner {
-  display: none;
-  position: fixed;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #00695C;
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  z-index: 10000;
-  align-items: center;
-  gap: 12px;
-  font-size: 14px;
-  max-width: 90vw;
-}
-#pwa-install-banner button {
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-#pwa-install-banner .pwa-btn-install {
-  background: #fff;
-  color: #00695C;
-}
-#pwa-install-banner .pwa-btn-dismiss {
-  background: transparent;
-  color: rgba(255,255,255,0.8);
-  text-decoration: underline;
-}
-
-
 /* === Offline indicator === */
 #offline-indicator {
   display: none;
@@ -775,23 +662,74 @@
   z-index: 10001;
 }
 
+
+/* === Manual/Tool Toggle === */
+.view-toggle { display:flex; gap:4px; margin:0 0 8px; padding:0; }
+.view-toggle button { flex:1; padding:6px 8px; border:2px solid var(--teal); border-radius:8px; background:#fff; color:var(--teal); font-size:0.75rem; font-weight:700; cursor:pointer; font-family:inherit; }
+.view-toggle button.active { background:var(--teal); color:#fff; }
+.test-compact .equip-badge,
+.test-compact .step,
+.test-compact .note,
+.test-compact .warning,
+.test-compact .info-box,
+.test-compact .formula,
+.test-compact img:not(.tci-img) { display:none !important; }
+.test-compact .card-body > p,
+.test-compact .method-panel > p { display:none !important; }
+
+/* === Compact Numpad === */
+.numpad-wrap { margin:4px 0; max-width:280px; }
+.numpad-grid { gap:3px !important; }
+.numpad-btn { min-height:36px !important; font-size:1rem !important; }
+.numpad-display { font-size:1.3rem !important; padding:6px 10px !important; }
+
+/* === Compact TCI === */
+.tci-cell { min-height:48px !important; }
+.tci-grid { gap:4px !important; }
+
+/* === Compact Questionnaire === */
+.q-row { margin-bottom:3px !important; padding:3px !important; }
+.q-btn { padding:4px 7px !important; font-size:0.7rem !important; min-width:30px !important; }
+
+/* === Management Plan Form === */
+.plan-section { margin-bottom:10px; padding:8px; background:#FAFAFA; border-radius:8px; }
+.plan-section-title { font-weight:700; font-size:0.85rem; color:#1565C0; margin-bottom:6px; padding-bottom:4px; border-bottom:2px solid #1565C0; }
+.plan-row { display:flex; align-items:center; gap:6px; margin-bottom:4px; flex-wrap:wrap; }
+.plan-row label:first-child { min-width:85px; font-size:0.72rem; font-weight:600; color:#555; flex-shrink:0; }
+.plan-row input[type="text"],.plan-row input[type="number"],.plan-row input[type="date"],.plan-row select,.plan-row textarea { border:1px solid #ccc; border-radius:4px; padding:4px 6px; font-size:0.78rem; font-family:inherit; }
+.plan-radio-group { display:flex; flex-wrap:wrap; gap:4px; font-size:0.72rem; }
+.plan-radio-group label { display:flex; align-items:center; gap:2px; white-space:nowrap; }
+.plan-check-group { display:flex; flex-wrap:wrap; gap:6px; font-size:0.72rem; }
+.plan-check-group label { display:flex; align-items:center; gap:2px; }
+.plan-table { width:100%; border-collapse:collapse; font-size:0.72rem; }
+.plan-table th,.plan-table td { border:1px solid #ddd; padding:3px 5px; text-align:center; }
+.plan-table th { background:#E3F2FD; font-weight:600; }
+.plan-table td:first-child { text-align:left; font-weight:500; }
+
+/* === Print === */
+@media print {
+  body * { visibility:hidden !important; }
+  #print-plan,#print-plan * { visibility:visible !important; }
+  #print-plan { position:absolute !important; left:0; top:0; width:100%; display:block !important; font-size:11px; line-height:1.5; color:#000; }
+  #print-plan table { border-collapse:collapse; width:100%; margin-bottom:6px; }
+  #print-plan th,#print-plan td { border:1px solid #000; padding:3px 5px; }
+  #print-plan th { background:#eee !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  #print-plan h2 { font-size:16px; text-align:center; margin-bottom:10px; border-bottom:2px solid #000; padding-bottom:5px; }
+  #print-plan .ps-title { font-weight:bold; font-size:12px; background:#eee; padding:2px 5px; margin-bottom:3px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  #print-plan .sig { margin-top:20px; border-top:1px solid #000; padding-top:10px; }
+  .header,.tab-nav,.footer-nav,.scroll-top,#offline-indicator { display:none !important; }
+}
+
 </style>
 </head>
 <body>
 
 <!-- ═══ HEADER ═══ -->
 <div class="header">
-  <h1>🦷 口腔機能精密検査<br>実施マニュアル</h1>
-  <div class="header-right">
-    <span class="badge">Ver.4.0 対応</span>
-    <span class="badge">タブレット用</span>
-  </div>
+  <h1 style="font-size:0.85rem;white-space:normal;line-height:1.3;">口腔機能精密検査支援ツール<br><span style="font-size:0.7rem;font-weight:400;">（富山花園歯科 監修）</span></h1>
 </div>
 
-<!-- ═══ DIAGNOSIS BANNER ═══ -->
-<div class="diagnosis-banner">
-  診断基準：7項目中 <span>3項目以上</span> 該当で「口腔機能低下症」
-</div>
+
 
 <!-- ═══ TAB NAVIGATION ═══ -->
 <div class="tab-nav" id="tabNav">
@@ -895,10 +833,14 @@
 </div>
 
 <!-- ──── ① 口腔衛生状態不良 ──── -->
-<div class="tab-panel" id="test1">
+<div class="tab-panel test-compact" id="test1">
   <div class="card">
     <div class="card-header bg1 c1">① 口腔衛生状態不良の評価</div>
     <div class="card-body">
+  <div class="view-toggle" style="padding:0 0 4px;">
+    <button class="active" onclick="toggleView(this,'test1','tool')">📏 測定</button>
+    <button onclick="toggleView(this,'test1','manual')">📖 マニュアル</button>
+  </div>
       <p style="font-size:0.8rem;margin-bottom:8px">以下の<strong>いずれか1つ</strong>の方法で評価します。</p>
       <div class="method-tabs">
         <button class="method-tab active" onclick="switchMethod(this,'m1a')">方法A：舌苔付着度（TCI）<br><span style="font-size:0.65rem;font-weight:400">※器材不要・推奨</span></button>
@@ -1025,10 +967,14 @@
 </div>
 
 <!-- ──── ② 口腔乾燥 ──── -->
-<div class="tab-panel" id="test2">
+<div class="tab-panel test-compact" id="test2">
   <div class="card">
     <div class="card-header bg2 c2">② 口腔乾燥の評価</div>
     <div class="card-body">
+  <div class="view-toggle" style="padding:0 0 4px;">
+    <button class="active" onclick="toggleView(this,'test2','tool')">📏 測定</button>
+    <button onclick="toggleView(this,'test2','manual')">📖 マニュアル</button>
+  </div>
       <p style="font-size:0.8rem;margin-bottom:8px">以下の<strong>いずれか1つ</strong>の方法で評価します。</p>
       <div class="method-tabs">
         <button class="method-tab active" onclick="switchMethod(this,'m2a')">方法A：口腔水分計<br><span style="font-size:0.65rem;font-weight:400">※簡便・推奨</span></button>
@@ -1194,10 +1140,14 @@
 </div>
 
 <!-- ──── ③ 咬合力低下 ──── -->
-<div class="tab-panel" id="test3">
+<div class="tab-panel test-compact" id="test3">
   <div class="card">
     <div class="card-header bg3 c3">③ 咬合力低下の評価</div>
     <div class="card-body">
+  <div class="view-toggle" style="padding:0 0 4px;">
+    <button class="active" onclick="toggleView(this,'test3','tool')">📏 測定</button>
+    <button onclick="toggleView(this,'test3','manual')">📖 マニュアル</button>
+  </div>
       <p style="font-size:0.8rem;margin-bottom:8px">以下の<strong>いずれか1つ</strong>の方法で評価します。</p>
       <div class="method-tabs">
         <button class="method-tab active" onclick="switchMethod(this,'m3a')">方法A：咬合力計<br><span style="font-size:0.65rem;font-weight:400">※機器測定</span></button>
@@ -1348,10 +1298,14 @@
 </div>
 
 <!-- ──── ④ 舌口唇運動機能低下 ──── -->
-<div class="tab-panel" id="test4">
+<div class="tab-panel test-compact" id="test4">
   <div class="card">
     <div class="card-header bg4 c4">④ 舌口唇運動機能低下の評価</div>
     <div class="card-body">
+  <div class="view-toggle" style="padding:0 0 4px;">
+    <button class="active" onclick="toggleView(this,'test4','tool')">📏 測定</button>
+    <button onclick="toggleView(this,'test4','manual')">📖 マニュアル</button>
+  </div>
       <div class="criteria">
         <div class="criteria-icon">🔴</div>
         <div>
@@ -1469,10 +1423,14 @@
 </div>
 
 <!-- ──── ⑤ 低舌圧 ──── -->
-<div class="tab-panel" id="test5">
+<div class="tab-panel test-compact" id="test5">
   <div class="card">
     <div class="card-header bg5 c5">⑤ 低舌圧の評価</div>
     <div class="card-body">
+  <div class="view-toggle" style="padding:0 0 4px;">
+    <button class="active" onclick="toggleView(this,'test5','tool')">📏 測定</button>
+    <button onclick="toggleView(this,'test5','manual')">📖 マニュアル</button>
+  </div>
       <div class="criteria">
         <div class="criteria-icon">🔴</div>
         <div>
@@ -1550,10 +1508,14 @@
 </div>
 
 <!-- ──── ⑥ 咀嚼機能低下 ──── -->
-<div class="tab-panel" id="test6">
+<div class="tab-panel test-compact" id="test6">
   <div class="card">
     <div class="card-header bg6 c6">⑥ 咀嚼機能低下の評価</div>
     <div class="card-body">
+  <div class="view-toggle" style="padding:0 0 4px;">
+    <button class="active" onclick="toggleView(this,'test6','tool')">📏 測定</button>
+    <button onclick="toggleView(this,'test6','manual')">📖 マニュアル</button>
+  </div>
       <p style="font-size:0.8rem;margin-bottom:8px">以下の<strong>いずれか1つ</strong>の方法で評価します。</p>
       <div class="method-tabs">
         <button class="method-tab active" onclick="switchMethod(this,'m6a')">方法A：グルコース溶出量<br><span style="font-size:0.65rem;font-weight:400">※グルコセンサー使用</span></button>
@@ -1684,10 +1646,14 @@
 </div>
 
 <!-- ──── ⑦ 嚥下機能低下 ──── -->
-<div class="tab-panel" id="test7">
+<div class="tab-panel test-compact" id="test7">
   <div class="card">
     <div class="card-header bg7 c7">⑦ 嚥下機能低下の評価</div>
     <div class="card-body">
+  <div class="view-toggle" style="padding:0 0 4px;">
+    <button class="active" onclick="toggleView(this,'test7','tool')">📏 測定</button>
+    <button onclick="toggleView(this,'test7','manual')">📖 マニュアル</button>
+  </div>
       <p style="font-size:0.8rem;margin-bottom:8px">以下の<strong>いずれか1つ</strong>の方法で評価します。</p>
       <div class="method-tabs">
         <button class="method-tab active" onclick="switchMethod(this,'m7b')">方法A：聖隷式嚥下質問紙<br><span style="font-size:0.65rem;font-weight:400">※15項目の質問・推奨</span></button>
@@ -1835,6 +1801,9 @@
       <div class="note" style="margin-top:8px;">3項目以上で「口腔機能低下症」と診断されます。</div>
     </div>
   </div>
+      <div style="text-align:center;margin:10px 0;">
+        <button id="copy-karte-btn" onclick="copyKarteText()" style="background:var(--teal);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;">📋 カルテ用テキストをコピー</button>
+      </div>
 
   <div class="result-card">
     <div class="result-card-header" style="background:var(--grey-100);">📋 各項目の結果
@@ -1872,6 +1841,75 @@
       <div class="input-group"><label>③ 咬合力の検査方法</label><select id="method-test3" onchange="judgeResults()"><option value="oramo" selected>Oramo-bf（N）：375N未満</option><option value="ps2f">プレスケールⅡ フィルタあり（N）：350N未満</option><option value="ps2n">プレスケールⅡ フィルタなし（N）：500N未満</option><option value="ps1">プレスケール旧（N）：200N未満</option><option value="teeth">残存歯数（本）：20本未満</option></select></div>
       <div class="input-group"><label>⑥ 咀嚼機能の検査方法</label><select id="method-test6" onchange="judgeResults()"><option value="glucose">グルコース濃度（mg/dL）：100未満で該当</option><option value="score">咀嚼能率スコア：2以下で該当</option></select></div>
       <div class="input-group"><label>⑦ 嚥下機能の検査方法</label><select id="method-test7" onchange="judgeResults()"><option value="seirei" selected>聖隷式（A数/B数）：A≧1またはB≧4で該当</option><option value="eat10">EAT-10（点）：3点以上で該当</option></select></div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="result-card" id="plan-card">
+    <div class="result-card-header" style="background:linear-gradient(90deg,#1565C0,#1976D2);color:#fff;">📄 口腔機能低下症管理計画書</div>
+    <div class="result-card-body">
+      <div class="plan-section">
+        <div class="plan-section-title">1. 患者基本情報</div>
+        <div class="plan-row"><label>フリガナ</label><input type="text" id="plan-furigana" placeholder="フリガナ"></div>
+        <div class="plan-row"><label>氏名</label><input type="text" id="plan-name" placeholder="自動取得" readonly></div>
+        <div class="plan-row"><label>年齢</label><input type="number" id="plan-age" placeholder="歳" style="width:70px;"> 歳</div>
+        <div class="plan-row"><label>性別</label><span class="plan-radio-group"><label><input type="radio" name="plan-sex" value="男"> 男</label><label><input type="radio" name="plan-sex" value="女"> 女</label></span></div>
+        <div class="plan-row"><label>作成日</label><input type="date" id="plan-date"></div>
+      </div>
+      <div class="plan-section">
+        <div class="plan-section-title">2. 全身の状態</div>
+        <div class="plan-row"><label>基礎疾患</label><div class="plan-check-group"><label><input type="checkbox" id="plan-d-heart"> 心疾患</label><label><input type="checkbox" id="plan-d-hepatitis"> 肝炎</label><label><input type="checkbox" id="plan-d-diabetes"> 糖尿病</label><label><input type="checkbox" id="plan-d-hypertension"> 高血圧症</label><label><input type="checkbox" id="plan-d-cerebrovascular"> 脳血管疾患</label><label><input type="checkbox" id="plan-d-other"> その他<input type="text" id="plan-d-other-text" style="width:80px;"></label></div></div>
+        <div class="plan-row"><label>服用薬剤</label><span class="plan-radio-group"><label><input type="radio" name="plan-med" value="なし" checked> なし</label><label><input type="radio" name="plan-med" value="あり"> あり</label></span><input type="text" id="plan-med-text" placeholder="薬剤名" style="width:100px;"></div>
+        <div class="plan-row"><label>意識レベル</label><span class="plan-radio-group"><label><input type="radio" name="plan-conscious" value="清明" checked> 清明</label><label><input type="radio" name="plan-conscious" value="不清明"> 不清明</label><label><input type="radio" name="plan-conscious" value="傾眠"> 傾眠</label></span></div>
+        <div class="plan-row"><label>認知機能低下</label><span class="plan-radio-group"><label><input type="radio" name="plan-cognitive" value="なし" checked> なし</label><label><input type="radio" name="plan-cognitive" value="あり"> あり</label></span></div>
+        <div class="plan-row"><label>肺炎の既往</label><span class="plan-radio-group"><label><input type="radio" name="plan-pneumonia" value="なし" checked> なし</label><label><input type="radio" name="plan-pneumonia" value="あり"> あり</label><label><input type="radio" name="plan-pneumonia" value="繰り返し"> 繰り返しあり</label></span></div>
+        <div class="plan-row"><label>体重の変化</label><span class="plan-radio-group"><label><input type="radio" name="plan-weight" value="なし" checked> なし</label><label><input type="radio" name="plan-weight" value="あり"> あり</label></span><input type="text" id="plan-weight-detail" placeholder="期間・増減" style="width:100px;"></div>
+        <div class="plan-row"><label>BMI</label><span class="plan-radio-group"><label><input type="radio" name="plan-bmi" value="正常" checked> 正常範囲内</label><label><input type="radio" name="plan-bmi" value="低体重"> 低体重</label><label><input type="radio" name="plan-bmi" value="肥満"> 肥満</label></span></div>
+        <div class="plan-row"><label>食事形態</label><span class="plan-radio-group"><label><input type="radio" name="plan-diet" value="常食" checked> 常食</label><label><input type="radio" name="plan-diet" value="軟菜食"> 軟菜食</label><label><input type="radio" name="plan-diet" value="刻み食"> 刻み食</label><label><input type="radio" name="plan-diet" value="ペースト食"> ペースト食</label><label><input type="radio" name="plan-diet" value="非経口"> 非経口</label><label><input type="radio" name="plan-diet" value="その他"> その他</label></span></div>
+        <div class="plan-row"><label>食欲不振</label><span class="plan-radio-group"><label><input type="radio" name="plan-appetite" value="なし" checked> なし</label><label><input type="radio" name="plan-appetite" value="あり"> あり</label></span><input type="text" id="plan-appetite-reason" placeholder="理由" style="width:100px;"></div>
+      </div>
+      <div class="plan-section">
+        <div class="plan-section-title">3. 口腔機能の状態 <button onclick="syncPlanFromResults()" style="border:1px solid var(--teal);background:var(--teal-light);color:var(--teal-dark);padding:2px 8px;border-radius:4px;font-size:0.65rem;font-weight:600;cursor:pointer;font-family:inherit;">検査結果から同期</button></div>
+        <table class="plan-table"><tr><th>項目</th><th>検査値</th><th>判定</th></tr>
+        <tr><td>口腔内の衛生状態</td><td id="plan-v1">-</td><td id="plan-j1">-</td></tr>
+        <tr><td>口腔内の乾燥程度</td><td id="plan-v2">-</td><td id="plan-j2">-</td></tr>
+        <tr><td>咬む力の程度</td><td id="plan-v3">-</td><td id="plan-j3">-</td></tr>
+        <tr><td>口唇の動き「パ」</td><td id="plan-v4a">-</td><td id="plan-j4a">-</td></tr>
+        <tr><td>舌尖の動き「タ」</td><td id="plan-v4b">-</td><td id="plan-j4b">-</td></tr>
+        <tr><td>奥舌の動き「カ」</td><td id="plan-v4c">-</td><td id="plan-j4c">-</td></tr>
+        <tr><td>舌の力の程度</td><td id="plan-v5">-</td><td id="plan-j5">-</td></tr>
+        <tr><td>咀嚼の機能の程度</td><td id="plan-v6">-</td><td id="plan-j6">-</td></tr>
+        <tr><td>嚥下の機能の程度</td><td id="plan-v7">-</td><td id="plan-j7">-</td></tr>
+        <tr><td>歯・歯肉の状態</td><td colspan="2"><span class="plan-radio-group" style="font-size:0.65rem;">プラーク<label><input type="radio" name="plan-plaque" value="なし"> なし</label><label><input type="radio" name="plan-plaque" value="あり"> あり</label> 歯肉炎症<label><input type="radio" name="plan-gingiva" value="なし"> なし</label><label><input type="radio" name="plan-gingiva" value="あり"> あり</label> 動揺<label><input type="radio" name="plan-mobility" value="なし"> なし</label><label><input type="radio" name="plan-mobility" value="あり"> あり</label></span></td></tr>
+        <tr><td>口腔内・義歯</td><td colspan="2"><input type="text" id="plan-denture" placeholder="自由記載" style="width:100%;"></td></tr>
+        </table>
+      </div>
+      <div class="plan-section">
+        <div class="plan-section-title">4. 口腔機能管理計画</div>
+        <table class="plan-table"><tr><th>項目</th><th>1.問題なし</th><th>2.維持</th><th>3.向上</th></tr>
+        <tr><td>口腔内の衛生</td><td><input type="radio" name="goal1" value="1"></td><td><input type="radio" name="goal1" value="2"></td><td><input type="radio" name="goal1" value="3"></td></tr>
+        <tr><td>口腔内の乾燥</td><td><input type="radio" name="goal2" value="1"></td><td><input type="radio" name="goal2" value="2"></td><td><input type="radio" name="goal2" value="3"></td></tr>
+        <tr><td>咬む力</td><td><input type="radio" name="goal3" value="1"></td><td><input type="radio" name="goal3" value="2"></td><td><input type="radio" name="goal3" value="3"></td></tr>
+        <tr><td>口唇の動き</td><td><input type="radio" name="goal4" value="1"></td><td><input type="radio" name="goal4" value="2"></td><td><input type="radio" name="goal4" value="3"></td></tr>
+        <tr><td>舌尖の動き</td><td><input type="radio" name="goal5" value="1"></td><td><input type="radio" name="goal5" value="2"></td><td><input type="radio" name="goal5" value="3"></td></tr>
+        <tr><td>奥舌の動き</td><td><input type="radio" name="goal6" value="1"></td><td><input type="radio" name="goal6" value="2"></td><td><input type="radio" name="goal6" value="3"></td></tr>
+        <tr><td>舌の力</td><td><input type="radio" name="goal7" value="1"></td><td><input type="radio" name="goal7" value="2"></td><td><input type="radio" name="goal7" value="3"></td></tr>
+        <tr><td>咀嚼の機能</td><td><input type="radio" name="goal8" value="1"></td><td><input type="radio" name="goal8" value="2"></td><td><input type="radio" name="goal8" value="3"></td></tr>
+        <tr><td>嚥下の機能</td><td><input type="radio" name="goal9" value="1"></td><td><input type="radio" name="goal9" value="2"></td><td><input type="radio" name="goal9" value="3"></td></tr>
+        </table>
+      </div>
+      <div class="plan-section">
+        <div class="plan-section-title">5. 総括・スケジュール</div>
+        <div class="plan-row"><label>管理方針・目標</label><textarea id="plan-policy" rows="3" placeholder="具体的な管理方法・訓練方法・目標を記載" style="width:100%;"></textarea></div>
+        <div class="plan-row"><label>再評価時期</label><select id="plan-reeval"><option value="3">約3ヶ月後</option><option value="6" selected>約6ヶ月後</option><option value="other">その他</option></select> <input type="date" id="plan-reeval-date"></div>
+        <div class="plan-row"><label>治療期間</label><input type="text" id="plan-duration" placeholder="例: 6ヶ月"></div>
+        <div class="plan-row"><label>医療機関名</label><input type="text" id="plan-clinic" value="富山花園歯科"></div>
+        <div class="plan-row"><label>担当歯科医師</label><input type="text" id="plan-doctor" placeholder="氏名"></div>
+      </div>
+      <div style="text-align:center;margin:12px 0;">
+        <button onclick="printPlan()" style="background:#1565C0;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:0.85rem;font-weight:700;cursor:pointer;font-family:inherit;">📄 管理計画書を印刷/PDF保存</button>
+      </div>
     </div>
   </div>
 </div>
@@ -2159,82 +2197,151 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// === PWA Install Banner ===
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', function(e) {
-  e.preventDefault();
-  deferredPrompt = e;
-  var banner = document.getElementById('pwa-install-banner');
-  if (banner) banner.style.display = 'flex';
-});
 
-function pwaInstall() {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(function(result) {
-    deferredPrompt = null;
-    var banner = document.getElementById('pwa-install-banner');
-    if (banner) banner.style.display = 'none';
-  });
-}
 
-function pwaDismiss() {
-  var banner = document.getElementById('pwa-install-banner');
-  if (banner) banner.style.display = 'none';
-}
-
-// === iOS Install Guide ===
-function iosShowGuide() {
-  var banner = document.getElementById('ios-install-banner');
-  if (banner) banner.style.display = 'flex';
-}
-function iosDismiss() {
-  var banner = document.getElementById('ios-install-banner');
-  if (banner) banner.style.display = 'none';
-  // Remember dismissal for 7 days
-  try { localStorage.setItem('ios-install-dismissed', Date.now()); } catch(e) {}
-}
-
-// Detect iOS Safari (not in standalone mode)
-(function() {
-  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  var isSafari = /Safari/.test(navigator.userAgent) && !/CriOS|FxiOS|Chrome/.test(navigator.userAgent);
-  var isStandalone = window.navigator.standalone === true ||
-    window.matchMedia('(display-mode: standalone)').matches;
-
-  if (isIOS && !isStandalone) {
-    // Check if dismissed recently
-    try {
-      var dismissed = localStorage.getItem('ios-install-dismissed');
-      if (dismissed && (Date.now() - parseInt(dismissed)) < 7 * 24 * 60 * 60 * 1000) return;
-    } catch(e) {}
-    // Show after 2 seconds
-    setTimeout(function() { iosShowGuide(); }, 2000);
+  // === View Toggle ===
+  function toggleView(btn,panelId,mode){
+    var panel=document.getElementById(panelId);
+    panel.querySelectorAll('.view-toggle button').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    if(mode==='tool'){panel.classList.add('test-compact');}
+    else{panel.classList.remove('test-compact');}
   }
-})();
+
+  // === Copy Karte Text ===
+  function copyKarteText(){
+    var names=['口腔衛生状態不良','口腔乾燥','咬合力低下','舌口唇運動機能低下','低舌圧','咀嚼機能低下','嚥下機能低下'];
+    var mmap={'tci':'TCI','bacteria':'細菌カウンタ','moisture':'口腔水分計','saxon':'サクソンテスト','oramo':'Oramo-bf','ps2f':'プレスケールⅡ(F)','ps2n':'プレスケールⅡ(NF)','ps1':'プレスケール旧','teeth':'残存歯数','glucose':'グルコース濃度','score':'咀嚼能率スコア','seirei':'聖隷式','eat10':'EAT-10'};
+    var units=['%','','N','回/秒','kPa','mg/dL','点'];
+    var nums=['①','②','③','④','⑤','⑥','⑦'];
+    var lines=['【口腔機能精密検査結果】'];
+    for(var i=1;i<=7;i++){
+      var na=document.getElementById('na-test'+i);
+      if(na&&na.checked){lines.push(nums[i-1]+names[i-1]+': 誤飲・誤嚥リスクのため実施せず');continue;}
+      var val=document.getElementById('res-test'+i).value;
+      var st=document.getElementById('res-status'+i).textContent;
+      var mel=document.getElementById('method-test'+i);
+      var mn=mel?mmap[mel.value]||'':'';
+      if(i===7){
+        var m7=mel?mel.value:'seirei';
+        if(m7==='eat10'){
+          var s=0;for(var q=1;q<=10;q++){var sb=document.querySelector('#eat10-q'+q+' .q-btn.selected');if(sb)s+=parseInt(sb.dataset.val)||0;}
+          lines.push(nums[i-1]+names[i-1]+': '+mn+' 合計'+s+'点 → '+st);
+        }else{
+          var ac=0,bc=0;for(var q=1;q<=15;q++){var sb=document.querySelector('#seirei-q'+q+' .q-btn.selected');if(sb){if(sb.dataset.val==='A')ac++;if(sb.dataset.val==='B')bc++;}}
+          lines.push(nums[i-1]+names[i-1]+': '+mn+' A:'+ac+'個 B:'+bc+'個 → '+st);
+        }
+        continue;
+      }
+      if(!val){lines.push(nums[i-1]+names[i-1]+': 未入力');}
+      else{lines.push(nums[i-1]+names[i-1]+': '+(mn?mn+' ':'')+val+units[i-1]+' → '+st);}
+    }
+    lines.push('該当: '+document.getElementById('diag-count').textContent+'/7 → '+document.getElementById('diag-verdict').textContent);
+    var text=lines.join('\n');
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        var b=document.getElementById('copy-karte-btn');b.textContent='✓ コピー完了';b.style.background='#4CAF50';
+        setTimeout(function(){b.textContent='📋 カルテ用テキストをコピー';b.style.background='';},2000);
+      });
+    }else{
+      var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+      var b=document.getElementById('copy-karte-btn');b.textContent='✓ コピー完了';b.style.background='#4CAF50';
+      setTimeout(function(){b.textContent='📋 カルテ用テキストをコピー';b.style.background='';},2000);
+    }
+  }
+
+  // === Sync Plan from Results ===
+  function syncPlanFromResults(){
+    document.getElementById('plan-name').value=document.getElementById('patient-name').value||'';
+    document.getElementById('plan-date').value=document.getElementById('exam-date').value||'';
+    var sm={'正常':'正常範囲内','該当':'低下','--':'-'};
+    for(var i=1;i<=7;i++){
+      var val=document.getElementById('res-test'+i).value||'-';
+      var st=document.getElementById('res-status'+i).textContent||'-';
+      var mapped=sm[st]||st;
+      var na=document.getElementById('na-test'+i);
+      if(na&&na.checked){val='実施せず';mapped='実施せず';}
+      if(i===4){
+        if(typeof dkResults!=='undefined'){
+          var pv=dkResults.pa,tv=dkResults.ta,kv=dkResults.ka;
+          document.getElementById('plan-v4a').textContent=pv?pv.rate.toFixed(1)+'回/秒':'-';
+          document.getElementById('plan-j4a').textContent=pv?(pv.rate<6?'低下':'正常範囲内'):'-';
+          document.getElementById('plan-v4b').textContent=tv?tv.rate.toFixed(1)+'回/秒':'-';
+          document.getElementById('plan-j4b').textContent=tv?(tv.rate<6?'低下':'正常範囲内'):'-';
+          document.getElementById('plan-v4c').textContent=kv?kv.rate.toFixed(1)+'回/秒':'-';
+          document.getElementById('plan-j4c').textContent=kv?(kv.rate<6?'低下':'正常範囲内'):'-';
+          var pOk=!pv||pv.rate>=6,tOk=!tv||tv.rate>=6,kOk=!kv||kv.rate>=6;
+          var r4=document.querySelector('input[name="goal4"][value="'+(pOk?'1':'3')+'"]');if(r4)r4.checked=true;
+          var r5=document.querySelector('input[name="goal5"][value="'+(tOk?'1':'3')+'"]');if(r5)r5.checked=true;
+          var r6=document.querySelector('input[name="goal6"][value="'+(kOk?'1':'3')+'"]');if(r6)r6.checked=true;
+        }
+      }else{
+        var ve=document.getElementById('plan-v'+i),je=document.getElementById('plan-j'+i);
+        if(ve){ve.textContent=val;je.textContent=mapped;}
+        var gi=i<=3?i:(i===5?7:(i===6?8:9));
+        var gv=(st==='正常'||st==='--')?'1':'3';
+        if(na&&na.checked)gv='1';
+        var gr=document.querySelector('input[name="goal'+gi+'"][value="'+gv+'"]');
+        if(gr)gr.checked=true;
+      }
+    }
+    var ed=document.getElementById('exam-date').value;
+    if(ed){var d=new Date(ed);d.setMonth(d.getMonth()+6);document.getElementById('plan-reeval-date').value=d.toISOString().split('T')[0];}
+  }
+
+  // === Print Plan ===
+  function printPlan(){
+    var pp=document.getElementById('print-plan');
+    var nm=document.getElementById('plan-name').value||document.getElementById('patient-name').value||'';
+    var furi=document.getElementById('plan-furigana').value||'';
+    var age=document.getElementById('plan-age').value||'';
+    var sx=document.querySelector('input[name="plan-sex"]:checked');sx=sx?sx.value:'';
+    var dt=document.getElementById('plan-date').value||document.getElementById('exam-date').value||'';
+    function gr(n){var r=document.querySelector('input[name="'+n+'"]:checked');return r?r.value:'';}
+    var dis=[];
+    if(document.getElementById('plan-d-heart').checked)dis.push('心疾患');
+    if(document.getElementById('plan-d-hepatitis').checked)dis.push('肝炎');
+    if(document.getElementById('plan-d-diabetes').checked)dis.push('糖尿病');
+    if(document.getElementById('plan-d-hypertension').checked)dis.push('高血圧症');
+    if(document.getElementById('plan-d-cerebrovascular').checked)dis.push('脳血管疾患');
+    if(document.getElementById('plan-d-other').checked)dis.push('その他:'+document.getElementById('plan-d-other-text').value);
+    var disTxt=dis.length?dis.join('、'):'なし';
+    var med=gr('plan-med');if(med==='あり')med+='('+document.getElementById('plan-med-text').value+')';
+    var wt=gr('plan-weight');if(wt==='あり')wt+='('+document.getElementById('plan-weight-detail').value+')';
+    var ap=gr('plan-appetite');if(ap==='あり')ap+='('+document.getElementById('plan-appetite-reason').value+')';
+    var oR='';
+    [['口腔内の衛生状態','plan-v1','plan-j1'],['口腔内の乾燥程度','plan-v2','plan-j2'],['咬む力の程度','plan-v3','plan-j3'],['口唇の動き「パ」','plan-v4a','plan-j4a'],['舌尖の動き「タ」','plan-v4b','plan-j4b'],['奥舌の動き「カ」','plan-v4c','plan-j4c'],['舌の力の程度','plan-v5','plan-j5'],['咀嚼の機能の程度','plan-v6','plan-j6'],['嚥下の機能の程度','plan-v7','plan-j7']].forEach(function(it){
+      oR+='<tr><td>'+it[0]+'</td><td>'+document.getElementById(it[1]).textContent+'</td><td>'+document.getElementById(it[2]).textContent+'</td></tr>';
+    });
+    oR+='<tr><td>歯・歯肉の状態</td><td colspan="2">プラーク:'+gr('plan-plaque')+' 歯肉炎症:'+gr('plan-gingiva')+' 動揺:'+gr('plan-mobility')+'</td></tr>';
+    oR+='<tr><td>口腔内・義歯</td><td colspan="2">'+(document.getElementById('plan-denture').value||'')+'</td></tr>';
+    var gM={'1':'問題なし','2':'機能維持を目指す','3':'機能向上を目指す'};
+    var gR='';
+    ['口腔内の衛生','口腔内の乾燥','咬む力','口唇の動き','舌尖の動き','奥舌の動き','舌の力','咀嚼の機能','嚥下の機能'].forEach(function(item,idx){
+      var g=gr('goal'+(idx+1));gR+='<tr><td>'+item+'</td><td>'+(gM[g]||'-')+'</td></tr>';
+    });
+    var diag=document.getElementById('diag-count').textContent+'/7項目該当 → '+document.getElementById('diag-verdict').textContent;
+    var pol=(document.getElementById('plan-policy').value||'').replace(/\n/g,'<br>');
+    var rv=document.getElementById('plan-reeval').value;
+    var rvd=document.getElementById('plan-reeval-date').value||'';
+    var rvt=rv==='other'?rvd:'約'+rv+'ヶ月後'+(rvd?' ('+rvd+')':'');
+    pp.innerHTML='<h2>口腔機能低下症管理計画書</h2>'+
+      '<div class="ps"><div class="ps-title">1. 患者基本情報</div><table><tr><td>フリガナ</td><td>'+furi+'</td><td>年齢</td><td>'+age+'歳</td></tr><tr><td>氏名</td><td>'+nm+'</td><td>性別</td><td>'+sx+'</td></tr><tr><td>作成日</td><td colspan="3">'+dt+'</td></tr></table></div>'+
+      '<div class="ps"><div class="ps-title">2. 全身の状態</div><table><tr><td>基礎疾患</td><td>'+disTxt+'</td></tr><tr><td>服用薬剤</td><td>'+med+'</td></tr><tr><td>意識レベル</td><td>'+gr('plan-conscious')+'</td></tr><tr><td>認知機能低下</td><td>'+gr('plan-cognitive')+'</td></tr><tr><td>肺炎の既往</td><td>'+gr('plan-pneumonia')+'</td></tr><tr><td>体重の変化</td><td>'+wt+'</td></tr><tr><td>BMI</td><td>'+gr('plan-bmi')+'</td></tr><tr><td>食事形態</td><td>'+gr('plan-diet')+'</td></tr><tr><td>食欲不振</td><td>'+ap+'</td></tr></table></div>'+
+      '<div class="ps"><div class="ps-title">3. 口腔機能の状態</div><table><tr><th>項目</th><th>検査値</th><th>判定</th></tr>'+oR+'</table><div style="margin-top:4px;font-weight:bold;">総合判定: '+diag+'</div></div>'+
+      '<div class="ps"><div class="ps-title">4. 口腔機能管理計画</div><table><tr><th>項目</th><th>計画</th></tr>'+gR+'</table></div>'+
+      '<div class="ps"><div class="ps-title">5. 総括・スケジュール</div><table><tr><td>管理方針・目標</td><td>'+pol+'</td></tr><tr><td>再評価の時期</td><td>'+rvt+'</td></tr><tr><td>治療期間</td><td>'+(document.getElementById('plan-duration').value||'')+'</td></tr><tr><td>医療機関名</td><td>'+(document.getElementById('plan-clinic').value||'')+'</td></tr><tr><td>担当歯科医師</td><td>'+(document.getElementById('plan-doctor').value||'')+'</td></tr></table></div>'+
+      '<div class="sig"><p>上記について説明を受けました。</p><p style="margin-top:15px;">患者署名: ___________________________ 日付: _______________</p></div>';
+    pp.style.display='block';
+    setTimeout(function(){window.print();pp.style.display='none';},100);
+  }
+
 </script>
 
 
-<!-- PWA Install Banner (Android) -->
-<div id="pwa-install-banner">
-  <span>📱 ホーム画面に追加してアプリとして使えます</span>
-  <button class="pwa-btn-install" onclick="pwaInstall()">追加</button>
-  <button class="pwa-btn-dismiss" onclick="pwaDismiss()">後で</button>
-</div>
 
-<!-- iOS Install Guide Banner -->
-<div id="ios-install-banner">
-  <div class="ios-title">📱 アプリとして使えます</div>
-  <div class="ios-steps">
-    <div><span class="step-icon">①</span> 画面下の <b>共有ボタン</b>（ <span style="font-size:17px;">⬆</span> ）をタップ</div>
-    <div><span class="step-icon">②</span> <b>「ホーム画面に追加」</b> を選択</div>
-    <div><span class="step-icon">③</span> 右上の <b>「追加」</b> をタップ</div>
-  </div>
-  <div style="font-size:12px;color:#888;">オフラインでも使えるようになります</div>
-  <button class="ios-btn-close" onclick="iosDismiss()">OK</button>
-  <div class="ios-arrow"></div>
-</div>
+
+
 
 <!-- Offline Indicator -->
 <div id="offline-indicator">📴 オフラインモード（キャッシュされたデータを表示中）</div>
@@ -2253,5 +2360,6 @@ window.addEventListener('offline', updateOnlineStatus);
 updateOnlineStatus();
 </script>
 
+<div id="print-plan" style="display:none;"></div>
 </body>
 </html>
