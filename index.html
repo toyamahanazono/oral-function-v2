@@ -2575,8 +2575,8 @@ if ('serviceWorker' in navigator) {
           var s=0;for(var q=1;q<=10;q++){var sb=document.querySelector('#eat10-q'+q+' .q-btn.selected');if(sb)s+=parseInt(sb.dataset.val)||0;}
           lines.push(nums[i-1]+names[i-1]+': '+mn+' 合計'+s+'点 → '+st);
         }else{
-          var ac=0,bc=0;for(var q=1;q<=15;q++){var sb=document.querySelector('#seirei-q'+q+' .q-btn.selected');if(sb){if(sb.dataset.val==='A')ac++;if(sb.dataset.val==='B')bc++;}}
-          lines.push(nums[i-1]+names[i-1]+': '+mn+' A:'+ac+'個 B:'+bc+'個 → '+st);
+          var ac=0,bc=0,cc=0;for(var q=1;q<=15;q++){var sb=document.querySelector('#seirei-q'+q+' .q-btn.selected');if(sb){if(sb.dataset.val==='A')ac++;else if(sb.dataset.val==='B')bc++;else if(sb.dataset.val==='C')cc++;}}
+          lines.push(nums[i-1]+names[i-1]+': '+mn+' A:'+ac+' B:'+bc+' C:'+cc+' → '+st);
         }
         continue;
       }
