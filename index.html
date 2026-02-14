@@ -1955,7 +1955,7 @@
             <div class="q-row" data-q="seirei-14"><div class="q-num">14</div><div class="q-text">夜、咳で目が覚めることがありますか</div><div class="q-btn-group"><button class="q-btn" data-val="A" onclick="qBtnClick(this,'seirei')">A</button><button class="q-btn" data-val="B" onclick="qBtnClick(this,'seirei')">B</button><button class="q-btn" data-val="C" onclick="qBtnClick(this,'seirei')">C</button></div></div>
             <div class="q-row" data-q="seirei-15"><div class="q-num">15</div><div class="q-text">声がかすれてきましたか</div><div class="q-btn-group"><button class="q-btn" data-val="A" onclick="qBtnClick(this,'seirei')">A</button><button class="q-btn" data-val="B" onclick="qBtnClick(this,'seirei')">B</button><button class="q-btn" data-val="C" onclick="qBtnClick(this,'seirei')">C</button></div></div>
           </div>
-          <div id="seirei-result" class="result-value result-none">A: --- / B: ---</div>
+          <div id="seirei-result" class="result-value result-none">A: --- / B: --- / C: --- (合計: ---点)</div>
         </div>
 
 
@@ -2043,7 +2043,7 @@
       <div class="input-group"><label>② 口腔乾燥の検査方法</label><select id="method-test2" onchange="judgeResults()"><option value="moisture">口腔水分計：27.0未満で該当</option><option value="saxon">サクソンテスト（g）：2g以下で該当</option></select></div>
       <div class="input-group"><label>③ 咬合力の検査方法</label><select id="method-test3" onchange="judgeResults()"><option value="oramo" selected>Oramo-bf（N）：375N未満</option><option value="ps2f">プレスケールⅡ フィルタあり（N）：350N未満</option><option value="ps2n">プレスケールⅡ フィルタなし（N）：500N未満</option><option value="ps1">プレスケール旧（N）：200N未満</option><option value="teeth">残存歯数（本）：20本未満</option></select></div>
       <div class="input-group"><label>⑥ 咀嚼機能の検査方法</label><select id="method-test6" onchange="judgeResults()"><option value="glucose">グルコース濃度（mg/dL）：100未満で該当</option><option value="score">咀嚼能率スコア：2以下で該当</option></select></div>
-      <div class="input-group"><label>⑦ 嚥下機能の検査方法</label><select id="method-test7" onchange="judgeResults()"><option value="seirei" selected>聖隷式（A数/B数）：A≧1またはB≧4で該当</option><option value="eat10">EAT-10（点）：3点以上で該当</option></select></div>
+      <div class="input-group"><label>⑦ 嚥下機能の検査方法</label><select id="method-test7" onchange="judgeResults()"><option value="seirei" selected>聖隷式（A×4点+B×1点）：合計4点以上で該当</option><option value="eat10">EAT-10（点）：3点以上で該当</option></select></div>
     </div>
   </div>
 </div>
@@ -2328,10 +2328,10 @@
   function calcEAT10(){var rows=document.querySelectorAll('#eat10-form .q-row'),t=0,a=0;rows.forEach(function(r){var sel=r.querySelector('.q-btn.selected');if(sel){t+=parseInt(sel.dataset.val);a++;}});var el=document.getElementById('eat10-result');if(a===0){el.className='result-value result-none';el.textContent='合計: --- 点';return;}if(t>=3){el.className='result-value result-fail';el.textContent='合計: '+t+'点 → 該当（3点以上）';}else{el.className='result-value result-pass';el.textContent='合計: '+t+'点 → 正常';}syncFromTabs();}
 
   // ===== Seirei (button-based, A>=1 or B>=4) =====
-  function calcSeirei(){var rows=document.querySelectorAll('#seirei-form .q-row'),ac=0,bc=0,cc=0,an=0;rows.forEach(function(r){var sel=r.querySelector('.q-btn.selected');if(sel){an++;if(sel.dataset.val==='A')ac++;else if(sel.dataset.val==='B')bc++;else if(sel.dataset.val==='C')cc++;}});var el=document.getElementById('seirei-result');if(an===0){el.className='result-value result-none';el.textContent='A: --- / B: --- / C: ---';return;}if(ac>=1||bc>=4){el.className='result-value result-fail';el.textContent='A: '+ac+' B: '+bc+' C: '+cc+' → 該当'+(ac>=1?'（A≧1）':'（B≧4）');}else{el.className='result-value result-pass';el.textContent='A: '+ac+' B: '+bc+' C: '+cc+' → 正常';}syncFromTabs();}
+  function calcSeirei(){var rows=document.querySelectorAll('#seirei-form .q-row'),ac=0,bc=0,cc=0,an=0;rows.forEach(function(r){var sel=r.querySelector('.q-btn.selected');if(sel){an++;if(sel.dataset.val==='A')ac++;else if(sel.dataset.val==='B')bc++;else if(sel.dataset.val==='C')cc++;}});var el=document.getElementById('seirei-result');if(an===0){el.className='result-value result-none';el.textContent='A: --- / B: --- / C: --- (合計: ---点)';return;}var total=ac*4+bc*1;if(total>=4){el.className='result-value result-fail';el.textContent='A: '+ac+'(×4) B: '+bc+'(×1) C: '+cc+' 合計: '+total+'点 → 該当（4点以上）';}else{el.className='result-value result-pass';el.textContent='A: '+ac+'(×4) B: '+bc+'(×1) C: '+cc+' 合計: '+total+'点 → 正常';}syncFromTabs();}
 
   // ===== Integrated Results =====
-  function judgeResults(){var fc=0;for(var i=1;i<=7;i++){var na=document.getElementById('na-test'+i).checked,val=document.getElementById('res-test'+i).value.trim(),se=document.getElementById('res-status'+i),ie=document.getElementById('res-test'+i);if(na){se.className='result-item-status status-na';se.textContent='不可';ie.disabled=true;ie.style.opacity='0.4';continue;}ie.disabled=false;ie.style.opacity='1';if(!val){se.className='result-item-status status-none';se.textContent='--';continue;}var v=parseFloat(val),fail=false;if(i===1){var m=document.getElementById('method-test1').value;fail=m==='tci'?v>=50:v>=3162000;}else if(i===2){var m=document.getElementById('method-test2').value;fail=m==='moisture'?v<27.0:v<=2.0;}else if(i===3){var m=document.getElementById('method-test3').value;var th={ps2f:350,ps2n:500,ps1:200,oramo:375,teeth:20};fail=v<th[m];}else if(i===4){fail=v<6.0;}else if(i===5){fail=v<30;}else if(i===6){var m=document.getElementById('method-test6').value;fail=m==='glucose'?v<100:v<=2;}else if(i===7){var m=document.getElementById('method-test7').value;if(m==='eat10')fail=v>=3;else fail=v>=1;}if(fail){se.className='result-item-status status-fail';se.textContent='該当';fc++;}else{se.className='result-item-status status-pass';se.textContent='正常';}}var ce=document.getElementById('diag-count'),ve=document.getElementById('diag-verdict'),be=document.getElementById('diagnosis-box');ce.textContent=fc;if(fc>=3){be.className='diagnosis-result diag-positive';ve.textContent='口腔機能低下症';}else{be.className='diagnosis-result diag-negative';ve.textContent=fc===0?'該当なし':'該当あり（診断基準未満）';}
+  function judgeResults(){var fc=0;for(var i=1;i<=7;i++){var na=document.getElementById('na-test'+i).checked,val=document.getElementById('res-test'+i).value.trim(),se=document.getElementById('res-status'+i),ie=document.getElementById('res-test'+i);if(na){se.className='result-item-status status-na';se.textContent='不可';ie.disabled=true;ie.style.opacity='0.4';continue;}ie.disabled=false;ie.style.opacity='1';if(!val){se.className='result-item-status status-none';se.textContent='--';continue;}var v=parseFloat(val),fail=false;if(i===1){var m=document.getElementById('method-test1').value;fail=m==='tci'?v>=50:v>=3162000;}else if(i===2){var m=document.getElementById('method-test2').value;fail=m==='moisture'?v<27.0:v<=2.0;}else if(i===3){var m=document.getElementById('method-test3').value;var th={ps2f:350,ps2n:500,ps1:200,oramo:375,teeth:20};fail=v<th[m];}else if(i===4){fail=v<6.0;}else if(i===5){fail=v<30;}else if(i===6){var m=document.getElementById('method-test6').value;fail=m==='glucose'?v<100:v<=2;}else if(i===7){var m=document.getElementById('method-test7').value;if(m==='eat10')fail=v>=3;else fail=v>=4;}if(fail){se.className='result-item-status status-fail';se.textContent='該当';fc++;}else{se.className='result-item-status status-pass';se.textContent='正常';}}var ce=document.getElementById('diag-count'),ve=document.getElementById('diag-verdict'),be=document.getElementById('diagnosis-box');ce.textContent=fc;if(fc>=3){be.className='diagnosis-result diag-positive';ve.textContent='口腔機能低下症';}else{be.className='diagnosis-result diag-negative';ve.textContent=fc===0?'該当なし':'該当あり（診断基準未満）';}
   // Update header badge
   var hc=document.getElementById('header-diag-count');
   var hv=document.getElementById('header-diag-verdict');
@@ -2416,10 +2416,9 @@
       if(el&&!el.textContent.includes('---')){
         var sa=el.textContent.match(/A:\s*(\d+)/);var sb=el.textContent.match(/B:\s*(\d+)/);
         var av=sa?parseInt(sa[1]):0;var bv=sb?parseInt(sb[1]):0;
+        var total=av*4+bv*1;
         document.getElementById('method-test7').value='seirei';
-        if(av>=1){document.getElementById('res-test7').value=av;}
-        else if(bv>=4){document.getElementById('res-test7').value=bv;}
-        else{document.getElementById('res-test7').value='0';}
+        document.getElementById('res-test7').value=total;
       }
     }
     judgeResults();
@@ -2453,11 +2452,12 @@
         var sm1=srel.textContent.match(/A:\s*(\d+)/);
         var sm2=srel.textContent.match(/B:\s*(\d+)/);
         var sm3=srel.textContent.match(/C:\s*(\d+)/);
-        seireiTab='A:'+((sm1?sm1[1]:'0'))+' B:'+((sm2?sm2[1]:'0'))+' C:'+((sm3?sm3[1]:'0'));
+        var sa=sm1?parseInt(sm1[1]):0,sb2=sm2?parseInt(sm2[1]):0,sc=sm3?parseInt(sm3[1]):0;
+        seireiTab='A:'+sa+' B:'+sb2+' C:'+sc+' ('+((sa*4+sb2*1))+'点)';
       }
     }
     var mnames={tci:'TCI',bacteria:'細菌',moisture:'水分計',saxon:'サクソン',oramo:'Oramo',ps2f:'PSⅡ(F)',ps2n:'PSⅡ(NF)',ps1:'PS旧',teeth:'残存歯',glucose:'グルコース',score:'スコア',seirei:'聖隷式',eat10:'EAT-10'};
-    var munit={tci:'%',bacteria:'Lv',moisture:'',saxon:'g',oramo:'N',ps2f:'N',ps2n:'N',ps1:'N',teeth:'本',glucose:'mg/dL',score:'',seirei:'',eat10:'点'};
+    var munit={tci:'%',bacteria:'Lv',moisture:'',saxon:'g',oramo:'N',ps2f:'N',ps2n:'N',ps1:'N',teeth:'本',glucose:'mg/dL',score:'',seirei:'点',eat10:'点'};
     for(var i=1;i<=7;i++){
       var tv=document.getElementById('tv'+i);
       if(!tv)continue;
@@ -2493,7 +2493,7 @@
       moisture:'口腔水分計 27.0未満',saxon:'サクソンテスト 2g以下',
       oramo:'Oramo-bf 375N未満',ps2f:'PSⅡフィルタあり 350N未満',ps2n:'PSⅡフィルタなし 500N未満',ps1:'PS旧 200N未満',teeth:'残存歯 20本未満',
       glucose:'グルコース 100mg/dL未満',score:'咀嚼能率スコア 2以下',
-      seirei:'聖隷式 A≧1またはB≧4',eat10:'EAT-10 3点以上'
+      seirei:'聖隷式 A×4+B×1 合計4点以上',eat10:'EAT-10 3点以上'
     };
     var mIds=[1,2,3,6,7];
     mIds.forEach(function(i){
@@ -2576,7 +2576,8 @@ if ('serviceWorker' in navigator) {
           lines.push(nums[i-1]+names[i-1]+': '+mn+' 合計'+s+'点 → '+st);
         }else{
           var ac=0,bc=0,cc=0;document.querySelectorAll('#seirei-form .q-row .q-btn.selected').forEach(function(sb){if(sb.dataset.val==='A')ac++;else if(sb.dataset.val==='B')bc++;else if(sb.dataset.val==='C')cc++;});
-          lines.push(nums[i-1]+names[i-1]+': '+mn+' A:'+ac+' B:'+bc+' C:'+cc+' → '+st);
+          var stotal=ac*4+bc*1;
+          lines.push(nums[i-1]+names[i-1]+': '+mn+' A:'+ac+'(×4) B:'+bc+'(×1) C:'+cc+' 合計:'+stotal+'点 → '+st);
         }
         continue;
       }
